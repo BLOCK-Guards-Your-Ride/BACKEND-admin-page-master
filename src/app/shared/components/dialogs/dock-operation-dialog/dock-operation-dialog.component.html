@@ -1,0 +1,27 @@
+<div mat-dialog-title class="dialog-title">
+  <h4 class="dialog-title__title">
+    {{ isFromDockList ? ('APP.DOCK_LIST.DIALOG.TITLE' | translate) : ('APP.PARKING_SESSION_LIST.DIALOG.TITLE' | translate) }}
+  </h4>
+  <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content>
+  <p>
+    {{ isFromDockList ? ('APP.DOCK_LIST.DIALOG.CONTENT' | translate) : ('APP.PARKING_SESSION_LIST.DIALOG.CONTENT' | translate) }}
+  </p>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    mat-button color="accent"
+    mat-dialog-close="OPEN">{{ 'APP.PARKING_SESSION_LIST.DIALOG.ACTIONS.OPEN' | translate }}</button>
+  <button
+    mat-button color="accent"
+    mat-dialog-close="OPEN_AND_STOP_PARKING_SESSION">
+    {{ 'APP.PARKING_SESSION_LIST.DIALOG.ACTIONS.OPEN_AND_STOP_PARKING_SESSION' | translate }}</button>
+  <button
+    mat-button color="warn"
+    mat-dialog-close>{{ 'APP.PARKING_SESSION_LIST.DIALOG.ACTIONS.CANCEL' | translate }}</button>
+</div>

@@ -1,0 +1,48 @@
+@import './../../../../app-mixins';
+
+.feedback-list {
+  @include list-style;
+
+  &__table {
+
+    .mat-column-creation-date,
+    .mat-column-full-name,
+    .mat-column-description,
+     {
+      @include column-style(3.25rem);
+    }
+
+    .mat-column-rating {
+      @include column-style(6.25rem);
+
+    }
+
+    .mat-column-view {
+      @include column-style(0.75rem);
+      text-align: center;
+    }
+
+  }
+
+  &-filter {
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 49rem) {
+      flex-direction: column;
+    }
+
+    &__input {
+      flex-grow: 1;
+      margin-right: 1.25rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @media screen and (max-width: 49rem) {
+        margin-right: 0;
+      }
+    }
+  }
+}

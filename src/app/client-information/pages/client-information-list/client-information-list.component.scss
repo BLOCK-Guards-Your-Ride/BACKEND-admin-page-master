@@ -1,0 +1,27 @@
+@import './../../../../app-mixins';
+
+.client-information-list {
+  @include list-style;
+
+  &__table {
+
+    .mat-column-creation-date,
+    .mat-column-phone-client-version,
+    .mat-column-valid-from,
+    .mat-column-valid-to {
+      @include column-style(6.25rem);
+    }
+
+    .mat-column-edit {
+      @include column-style(6.25rem);
+      text-align: center;
+    }
+
+  }
+
+  &-filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+  }
+}

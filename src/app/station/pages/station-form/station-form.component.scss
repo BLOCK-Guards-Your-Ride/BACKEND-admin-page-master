@@ -1,0 +1,101 @@
+@import './../../../../app-colors';
+@import './../../../../app-media-queries';
+
+.station {
+  &-card-form {
+    &-actions {
+      @include lt-desktop {
+        flex-direction: column;
+      }
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &-actions__save-and-exit {
+      @include lt-desktop {
+        margin-bottom: .6rem;
+        margin-right: 0;
+      }
+
+      margin-right: 1.25rem;
+    }
+
+    &-actions > * {
+      flex: 1 0 calc(50% - .6rem);
+    }
+
+    &__station-qr-code {
+      margin-bottom: .6rem;
+    }
+  }
+
+  &-card {
+
+    &-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__sub-title {
+      margin-bottom: .3rem;
+    }
+  }
+
+  &-accordion {
+    margin: 1.25rem 0;
+
+    &__map {
+      min-height: 18.75rem;
+    }
+
+  }
+
+  &-no-geo {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &__span {
+      margin-right: .6rem;
+    }
+  }
+
+  &-coordinates {
+    display: flex;
+    justify-content: stretch;
+    margin-top: 1.25rem;
+
+    &__lng {
+      flex: 1 0 calc(50% - .3rem);
+    }
+
+    &__lat {
+      flex: 1 0 calc(50% - .3rem);
+      margin-right: .6rem;
+    }
+
+  }
+}
+
+.description {
+  &-hint {
+    &--blue {
+      color: $block-blue;
+    }
+  }
+}
+
+.title {
+  &-accordion {
+    &--red {
+      color: $block-red;
+      margin-left: .9rem;
+    }
+  }
+}
+
+.tariff-accordion-wrapper {
+  margin-bottom: 30px;
+}

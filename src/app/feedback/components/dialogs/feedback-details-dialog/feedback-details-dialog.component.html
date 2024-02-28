@@ -1,0 +1,43 @@
+<div mat-dialog-title class="dialog-title">
+  <h4 class="dialog-title__title">{{ 'APP.FEEDBACK_LIST.DIALOG.TITLE' | translate }}</h4>
+  <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content">
+  <div class="name-box">
+    <div>
+      <span class="field-title">{{ 'APP.FEEDBACK_LIST.DIALOG.DETAILS.FULL_NAME' | translate }}</span>
+      <span>{{ feedback.fullName }}</span>
+    </div>
+  </div>
+  <hr/>
+  <div class="date-box">
+    <div>
+      <span class="field-title">{{ 'APP.FEEDBACK_LIST.DIALOG.DETAILS.CREATION_DATE' | translate }}</span>
+      <span>{{ feedback.creationDate | date:'y.MM.dd.' }}</span>
+    </div>
+  </div>
+  <hr/>
+  <div class="description-box">
+    <div>
+      <span class="field-title">{{ 'APP.FEEDBACK_LIST.DIALOG.DETAILS.DESCRIPTION' | translate }}</span>
+      <span>{{ feedback.description }}</span>
+    </div>
+  </div>
+  <hr/>
+  <div class="rating-box">
+    <div>
+      <span class="field-title">{{ 'APP.FEEDBACK_LIST.DIALOG.DETAILS.RATING' | translate }}</span>
+      <app-rate-display [rate]="feedback.rating"></app-rate-display>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <button
+    class="dialog-actions__close"
+    mat-button color="accent"
+    mat-dialog-close>{{ 'APP.FEEDBACK_LIST.DIALOG.ACTIONS.CLOSE' | translate }}</button>
+</div>

@@ -1,0 +1,173 @@
+variables:
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
+.set-version: &set-version
+  export VERSION=1.0.0-$CI_PIPELINE_ID-$CI_ENVIRONMENT_NAME
+
+stages:
+  - build
+  - test
+  - docker-build
+  - deploy
+
+.application-build: &application-build
+  image: node:12.22.7
+  stage: build
+  environment:
+    name: dev
+  tags:
+    - fractal-server
+    - node-build
+  artifacts:
+    paths:
+      - dist/
+  cache:
+    paths:
+      - node_modules/
+
+.docker-build: &docker-build
+  image: docker:20.10.13-dind
+  stage: docker-build
+  when: manual
+  services:
+    - name: docker:20.10.13-dind
+      alias: docker
+  before_script:
+    - docker info
+    - docker login -u "$CI_INFRA_REGISTRY_USER" -p "$CI_INFRA_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - *set-version
+    - export IMAGE_NAME=registry.gitlab.com/avibike-block/infra/block-frontend:$VERSION
+    - docker build -t $IMAGE_NAME .
+    - docker push $IMAGE_NAME
+  tags:
+    - fractal-server
+    - docker-dind
+.helm-chart-build: &helm-chart-build
+  image: maven:3.6.1-jdk-11
+  stage: docker-build
+  when: manual
+  script:
+    - *set-version
+    - cd web-helm
+    - mvn versions:set -DnewVersion=$VERSION
+    - mvn process-resources -Phelm
+    - cd target/helm
+    - ls
+    - curl --request POST --user $CI_INFRA_REGISTRY_USER:$CI_INFRA_REGISTRY_PASSWORD --form "chart=@block-frontend-${VERSION}.tgz" "${CI_API_V4_URL}/projects/${CI_INFRA_PROJECT_ID}/packages/helm/api/stable/charts"
+  tags:
+    - fractal-server
+    - helm-build
+  artifacts:
+    paths:
+      - web-helm/
+  cache:
+    paths:
+    -   .m2/repository
+
+.deploy-frontend: &deploy-frontend
+  image: avibike/kubectl-helm:2
+  stage: deploy
+  when: manual
+  script:
+    - *set-version
+    - kubectl config set-cluster blockcity-tech --server=$KUBE_SERVER
+    - kubectl config set clusters.blockcity-tech.certificate-authority-data $KUBE_SERVER_CA --set-raw-bytes=false
+    - kubectl config set users.gitlab.client-certificate-data $KUBE_CLIENT_CA --set-raw-bytes=false
+    - kubectl config set users.gitlab.client-key-data $KUBE_CLIENT_CA_KEY --set-raw-bytes=false
+    - kubectl config set-context blockcity --cluster=blockcity-tech --user=gitlab
+    - kubectl config use-context blockcity
+    - helm repo add avibike "${CI_API_V4_URL}/projects/${CI_INFRA_PROJECT_ID}/packages/helm/stable" --username $CI_INFRA_REGISTRY_USER --password $CI_INFRA_REGISTRY_PASSWORD
+    - helm repo update
+    - helm upgrade block-frontend avibike/block-frontend -n $CI_ENVIRONMENT_NAME --version $VERSION -i
+  tags:
+    - development
+    - kube-runner
+
+application-build:dev:
+  <<: *application-build
+  script:
+    - npm install
+    - npm run-script build-dev
+
+application-build:tst:
+  <<: *application-build
+  when: manual
+  script:
+    - npm install
+    - npm run-script build-tst    
+
+application-build:prd:
+  <<: *application-build
+  when: manual
+  script:
+    - npm install
+    - npm run-script build-prd
+
+docker-build:dev:
+  <<: *docker-build
+  environment:
+    name: dev
+  dependencies:
+    - application-build:dev
+  needs: ["application-build:dev"]
+
+docker-build:tst:
+  <<: *docker-build
+  when: manual
+  environment:
+    name: tst
+  dependencies:
+    - application-build:tst
+  needs: ["application-build:tst"]
+
+docker-build:prd:
+  <<: *docker-build
+  when: manual
+  environment:
+    name: prd
+  dependencies:
+    - application-build:prd
+  needs: ["application-build:prd"]
+
+helm-chart-build:dev:
+  <<: *helm-chart-build
+  environment:
+    name: dev
+  needs: ["docker-build:dev"]
+
+helm-chart-build:tst:
+  <<: *helm-chart-build
+  when: manual
+  environment:
+    name: tst
+  needs: ["docker-build:tst"]
+
+helm-chart-build:prd:
+  <<: *helm-chart-build
+  when: manual
+  environment:
+    name: prd
+  needs: ["docker-build:prd"]
+
+deploy-frontend-dev:
+  <<: *deploy-frontend
+  environment:
+    name: dev
+    url: https://admin.dev.server.blockcity.tech
+  needs: ["helm-chart-build:dev"]
+
+deploy-frontend-tst:
+  <<: *deploy-frontend
+  environment:
+    name: tst
+    url: https://admin.tst.server.blockcity.tech
+  needs: ["helm-chart-build:tst"]
+
+deploy-frontend-prd:
+  <<: *deploy-frontend
+  environment:
+    name: prd
+    url: https://admin.server.blockcity.tech
+  needs: ["helm-chart-build:prd"]

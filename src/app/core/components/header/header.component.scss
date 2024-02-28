@@ -1,0 +1,25 @@
+.upper-toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  .header-image {
+    cursor: pointer;
+    max-height: 100%;
+  }
+
+  .userinfo {
+    p {
+      margin: 0;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    p:first-of-type {
+      margin-top: 6px;
+    }
+
+    p:last-of-type {
+      margin-top: -10px;
+    }
+  }
+}

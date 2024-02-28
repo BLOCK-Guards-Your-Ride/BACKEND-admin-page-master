@@ -1,0 +1,16 @@
+@import './../app-media-queries';
+
+.main-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.25rem;
+
+  .content-wrapper {
+    @include lt-desktop {
+      width: 100vw;
+    }
+    max-width: 53rem;
+    width: 80vw;
+  }
+}

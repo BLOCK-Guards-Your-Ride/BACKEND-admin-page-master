@@ -1,0 +1,722 @@
+{
+  "APP": {
+    "BACK_BUTTON": {
+      "BACK_TO_PREVIOUS_PAGE": "Vissza az előző oldalra",
+      "BACK_TO_USER_LIST": "Vissza a felhasználók listájára",
+      "BACK_TO_STATION_LIST": "Vissza az állomások listájára",
+      "BACK_TO_CLIENT_INFORMATION_LIST": "Vissza a kliens információk listájára",
+      "BACK_TO_ORGANIZATION_LIST": "Vissza a szervezetek listájára"
+    },
+    "LOGIN": {
+      "TITLE": "Bejelentkezés",
+      "FORM": {
+        "INPUT": {
+          "EMAIL": "E-mail cím",
+          "PASSWORD": "Jelszó"
+        },
+        "BUTTON": {
+          "LOGIN": "Belépek"
+        }
+      }
+    },
+    "USER": {
+      "TITLE": "Felhasználó létrehozása",
+      "FORM": {
+        "INPUT": {
+          "FIRST_NAME": "Keresztnév",
+          "LAST_NAME": "Vezetéknév",
+          "EMAIL": "E-mail cím",
+          "PASSWORD": "Jelszó",
+          "PASSWORD_AGAIN": "Jelszó mégegyszer",
+          "PHONE_NUMBER": "Telefonszám",
+          "PARKING_BALANCE": "Parkolási egyenleg",
+          "SECURITY_QUESTION": "Biztonsági kérdés",
+          "SECURITY_ANSWER": "Biztonsági válasz",
+          "PRIVACY_POLICY_ACCEPTED": "Adatvédelmi nyilatkozatot elfogadom",
+          "BIRTH_DATE": "Születési dátum",
+          "GENDER": {
+            "LABEL": "Nem",
+            "OPTIONS": {
+              "MALE": "Férfi",
+              "FEMALE": "Nő",
+              "OTHER": "Egyéb"
+            }
+          },
+          "SECURITY_GROUP": {
+            "LABEL": "Felhasználói szerepkör",
+            "OPTIONS": {
+              "ADMIN": "Adminisztrátor",
+              "PREMIUM": "Prémium felhasználó",
+              "USER": "Felhasználó",
+              "STATION_ADMIN": "Állomás adminisztrátor",
+              "UNKNOWN": "Ismeretlen"
+            }
+          }
+        },
+        "BUTTON": {
+          "CREATE": "Létrehozás"
+        },
+        "ERROR": {
+          "PASSWORD_MISMATCH": "A két jelszónak meg kell egyeznie!"
+        }
+      }
+    },
+    "STATION": {
+      "TITLE": {
+        "CREATE": "Állomás létrehozása",
+        "EDIT": "Állomás szerkesztése"
+      },
+      "FORM": {
+        "INPUT": {
+          "NAME_OF_STATION": "Állomás neve",
+          "QR_CODE_OF_STATION": "Állomás QR kód azonosítója",
+          "POSITION": "Állomás pozíciója",
+          "TARIFF": "Tarifa",
+          "LONGITUDE": "Hosszúsági kör",
+          "LATITUDE": "Szélességi kör",
+          "DESCRIPTION": "Leírás",
+          "ADDRESS": "Állomás címe"
+        },
+        "ACCORDION": {
+          "TITLE": "Koordináták",
+          "DESCRIPTION": "Kattins a szerkesztéshez",
+          "GEO_LOADING": "Helyadatok lekérdezése",
+          "INCORRECT_FILL": "Hibás kitöltés",
+          "TARIFF": {
+            "TITLE": "Tarifák",
+            "TYPE": "Tarifa típusa",
+            "TYPES": {
+              "ABSOLUTE": "Abszolút",
+              "RELATIVE": "Relatív"
+            },
+            "FIELD": {
+              "FROM_TIME": "Időszak kezdete",
+              "TO_TIME": "Időszak vége",
+              "INTERVAL_FROM": "Intervallum kezdete",
+              "INTERVAL_TO": "Intervallum vége",
+              "PRICE": "Ft / perc"
+            }
+          }
+        },
+        "HINT": {
+          "PREVIEW": "Előnézet:",
+          "STATION_SUFFIX": "-STATION"
+        },
+        "BUTTON": {
+          "CREATE": "Létrehozás",
+          "EDIT": "Változatások mentése",
+          "EDIT_AND_EXIT": "Mentés és kilépés"
+        }
+      }
+    },
+    "ERROR": {
+      "FORM": {
+        "INPUT": {
+          "REQUIRED": "Mező kitöltése kötelező!",
+          "EMAIL": "Hibás E-mail cím!",
+          "MAX_LENGTH": "Maximum {{maxlength}} karakter adjató meg!",
+          "INCORRECT_DATE": "Nem megfelelő dátum!",
+          "INCORRECT_EMAIL": "Nem megfelelő formátumú e-mail cím!"
+        }
+      },
+      "AUTH": {
+        "BAD_REQUEST": "Hibás kitöltés",
+        "UNAUTHORIZED": "Hibás felhasználói adatok",
+        "NOT_FOUND": "Nem létező felhasználó",
+        "FORBIDDEN": "Felhasználó aktiválásra vár.. Kérem próbálkozzon később!",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "STATION_FORM": {
+        "BAD_REQUEST": "Hibás kitöltés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "NOT_FOUND": "Állomás nem található",
+        "FORBIDDEN": "Megtagadva",
+        "UNIQUE_IDENTIFIER_IS_NOT_UNIQUE": "Ez az egyedi azonosító már használatban van egy másik állomásnál!",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "CLIENT_INFORMATION_FORM": {
+        "BAD_REQUEST": "Hibás kitöltés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "FORBIDDEN": "Megtagadva",
+        "NOT_FOUND": "Kliens verzió nem található",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "PLC_METADATA_FORM": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "FORBIDDEN": "Megtagadva",
+        "NOT_FOUND": "PLC metaadatok nem találhatóak",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "STATION_CONNECTION_DATA_FORM": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "FORBIDDEN": "Megtagadva",
+        "NOT_FOUND": "Kapcsolódási adatok nem találhatóak",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "PARKING_SESSION_LIST": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "NOT_ALLOWED": "Megtagadva",
+        "NOT_FOUND": "Nem található",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "DOCK_LIST": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "NOT_ALLOWED": "Megtagadva",
+        "NOT_FOUND": "Dokk lista nem található",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "METRIC_LIST": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "NOT_ALLOWED": "Megtagadva",
+        "NOT_FOUND": "Metrikai adatok nem találhatóak",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "IMAGE_LIST": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "NOT_ALLOWED": "Megtagadva",
+        "NOT_FOUND": "Fénykép lista nem található",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      },
+      "ADMIN_FORM": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "NOT_ALLOWED": "Megtagadva",
+        "NOT_FOUND": "Nem található",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!",
+        "EMAIL_ALREADY_EXISTS": "Ilyen e-mail címmel már regisztráltak"
+      },
+      "ORGANIZATION_FORM": {
+        "NOT_FOUND": "Szervezet nem található"
+      },
+      "ADD_USER": {
+        "BAD_REQUEST": "Hibás kérés",
+        "UNAUTHORIZED": "Bejelentlezés szükséges",
+        "NOT_ALLOWED": "Megtagadva",
+        "NOT_FOUND": "Felhasználó nem található",
+        "SERVER_ERROR": "Rendszerhiba.. Kérem próbálkozzon később!"
+      }
+    },
+    "MENU": {
+      "BUTTON": {
+        "LOGIN": "Bejelentkezés",
+        "USER": {
+          "TEXT": "Felhasználók",
+          "SUB_MENUS": {
+            "NEW_ADMIN": "Felhasználó létrehozása",
+            "USER_LIST": "Felhasználók listája"
+          }
+        },
+        "STATION": {
+          "TEXT": "Állomások",
+          "SUB_MENUS": {
+            "NEW_STATION": "Új állomás felvétele",
+            "STATION_LIST": "Állomások listája"
+          }
+        },
+        "FEEDBACK_LIST": "Visszajelzések",
+        "CLIENT_INFORMATION": {
+          "TEXT": "Kliens Információk",
+          "SUB_MENUS": {
+            "NEW_CLIENT_INFORMATION": "Kliens információ létrehozása",
+            "CLIENT_INFORMATION_LIST": "Kliens információk listája"
+          }
+        },
+        "ORGANIZATION": {
+          "TEXT": "Szervezetek",
+          "SUB_MENUS": {
+            "NEW_ORGANIZATION": "Szervezet létrehozása",
+            "ORGANIZATION_LIST": "Szervezetek listája"
+          }
+        }
+      }
+    },
+    "HEADER": {
+      "BUTTON": {
+        "LOGOUT": "Kijelentklezés"
+      }
+    },
+    "SNACK_BAR": {
+      "ERROR": {
+        "LOGOUT": "Hiba lépett fel kijelentkezés közben",
+        "UNAUTHORIZED": "Lejárt a munkamenet, kérem jelentlkezzen be újra!",
+        "NO_PERMISSION": "Nincs jogosultsága az oldal megtekintéséhez!"
+      },
+      "SUCCESS": {
+        "COPY": "Sikeres másolás",
+        "CREATE": "Létrehozás sikeres",
+        "SAVE": "Sikeres mentés",
+        "STATION": {
+          "SAVE": "Sikeres mentés"
+        },
+        "IMAGE": {
+          "PROCESS": "Fénykép létrehozása folyamatban...",
+          "SAVE": "Fénykép sikeresen mentve"
+        },
+        "ADMIN": {
+          "CREATE": "Létrehozás sikeres"
+        },
+        "CLIENT_INFORMATION": {
+          "CREATE": "Létrehozás sikeres",
+          "SAVE": "Sikeres mentés"
+        }
+      }
+    },
+    "LIST": {
+      "NO_LIST_ITEM_FOUND": "Nincs megjeleníthető listaelem",
+      "PAGINATOR": {
+        "ITEMS_PER_PAGE": "Megjelenített sorok száma:",
+        "NEXT_PAGE": "Következő oldal",
+        "PREVIOUS_PAGE": "Előző oldal"
+      },
+      "FILTER": {
+        "TITLE": "Szűrő"
+      }
+    },
+    "USER_LIST": {
+      "FILTER": {
+        "PLACEHOLDER": {
+          "NAME": "Név",
+          "EMAIL": "E-mail cím",
+          "PHONE_NUMBER": "Telefonszám"
+        }
+      },
+      "TABLE": {
+        "TITLE": "Felhasználók listája",
+        "COLUMNS": {
+          "ID": "Egyedi azonosító",
+          "EMAIL": "E-mail cím",
+          "NAME": "Név",
+          "PHONE_NUMBER": "Telefonszám",
+          "DETAILS": {
+            "HEADER": "Részletek",
+            "TOOLTIP": "Felhasználó adatai és parkolásainak listája"
+          }
+        }
+      }
+    },
+    "STATION_LIST": {
+      "FILTER": {
+        "PLACEHOLDER": {
+          "NAME": "Név",
+          "STATION_QR_CODE": "Állomás egyedi azonosítója",
+          "LAT": "Szélességi kör",
+          "LNG": "Hosszúsági kör",
+          "RADIUS": "Keresési sugár"
+        }
+      },
+      "TABLE": {
+        "TITLE": "Állomások listája",
+        "COLUMNS": {
+          "STATE": "Állomás állapota",
+          "STATION_QR_CODE": "Állomás egyedi azanosítója",
+          "DOCKS": "Összes dokk / Szabad dokkok",
+          "NAME_OF_DOCK": "Állomás neve",
+          "LONGITUDE": "Hosszúsági kör",
+          "LATITUDE": "Szélességi kör",
+          "STATUS": "Státusz",
+          "EDIT": "Szerkesztés",
+          "EDIT_MENU": {
+            "EDIT": "Állomás szerkesztése",
+            "STATION_CONNECTION_DATA": "Kapcsolódási adatok",
+            "PLC_METADATA": "PLC metaadatok",
+            "DOCK_LIST": "Dokkok listázása",
+            "ACTIVATE": "Állomás aktiválása",
+            "INACTIVATE": "Állomás inaktiválása",
+            "SENSOR_LIST": "Szenzorok listázása",
+            "IMAGE_LIST": "Fényképek listázása",
+            "METRIC_LIST": "Metrikai adatok"
+          }
+        }
+      }
+    },
+    "CLIENT_INFORMATION_LIST": {
+      "FILTER": {
+        "PLACEHOLDER": {
+          "PHONE_CLIENT_VERSION": "Kliens verzió",
+          "VALID_FROM": "Érvényesség kezdete",
+          "VALID_TO": "Érvényesség vége"
+        }
+      },
+      "TABLE": {
+        "TITLE": "Kliens információk listája",
+        "COLUMNS": {
+          "CREATION_DATE": "Létrehozása dátuma",
+          "PHONE_CLIENT_VERSION": "Kliens verzió",
+          "VALID_FROM": "Érvényesség kezdete",
+          "VALID_TO": "Érvényesség vége",
+          "EDIT": "Szerkesztés"
+        }
+      }
+    },
+    "FEEDBACK_LIST": {
+      "FILTER": {
+        "PLACEHOLDER": {
+          "USER_ID": "Felhasználó egyedi azonosítója",
+          "RATING": "Értékelés"
+        }
+      },
+      "TABLE": {
+        "TITLE": "Visszajelzések listája",
+        "COLUMNS": {
+          "CREATION_DATE": "Rögzítés dátuma",
+          "FULL_NAME": "Felhasználó neve",
+          "DESCRIPTION": "Visszajelzés",
+          "RATING": "Értékelés",
+          "VIEW": "Megtekintés"
+        }
+      },
+      "DIALOG": {
+        "TITLE": "Visszajelzés részletei",
+        "ACTIONS": {
+          "CLOSE": "Bezárás"
+        },
+        "DETAILS": {
+          "FULL_NAME": "Felhasználó neve",
+          "CREATION_DATE": "Rögzítés dátuma",
+          "DESCRIPTION": "Visszajezlés",
+          "RATING": "Értékelés"
+        }
+      }
+    },
+    "PARKING_SESSION_LIST": {
+      "FILTER": {
+        "PLACEHOLDER": {
+          "STATION_NAME": "Állomás neve"
+        }
+      },
+      "TABLE": {
+        "TITLE": "Parkolások listája",
+        "COLUMNS": {
+          "STATUS": "Állapot",
+          "DOCK_NR": "Dokk száma",
+          "PARKING_START_TIME": "Parkolási kezdete",
+          "PARKING_STOP_TIME": "Parkolás vége",
+          "PRICE": "Ár",
+          "STATION_NAME": "Állomás neve",
+          "STOP_PARKING": "Parkolás leállítása"
+        }
+      },
+      "DIALOG": {
+        "TITLE": "Parkolás leállítási műveletek",
+        "CONTENT": "Válasszon a leállítási módok közül!",
+        "ACTIONS": {
+          "OPEN": "Dokk nyitása",
+          "OPEN_AND_STOP_PARKING_SESSION": "Dokk nyitása és parkolás leállítása",
+          "CANCEL": "Mégse"
+        }
+      }
+    },
+    "METRIC_LIST": {
+      "TABLE": {
+        "TITLE": "Metrikai adatok",
+        "COLUMNS": {
+          "METRIC_TYPE": "Metrika típusa",
+          "METRIC_STATUS": "Metrika státusza",
+          "MESSAGE": "Metrika üzenet"
+        }
+      }
+    },
+    "IMAGE_LIST": {
+      "CREATE": "Fénykép készítése",
+      "TABLE": {
+        "TITLE": "Fényképek listája",
+        "COLUMNS": {
+          "ID": "Azonosító",
+          "REQUEST_ID": "Request azonosító",
+          "OBJECT": "Objektum neve",
+          "CREATION_DATE": "Létrehozás ideje",
+          "URL": "Fénykép megtekintése"
+        }
+      }
+    },
+    "DOCK_LIST": {
+      "TABLE": {
+        "TITLE": "Dokkok listája",
+        "COLUMNS": {
+          "DOCK_NR": "Dokk száma",
+          "ENABLED": "Engedélyezett",
+          "LAST_OPEN_STATE": "Zár utolsó állapota",
+          "OCCUPIED": "Foglalt",
+          "OPERATION": "Állomás nyitása",
+          "BOLT_LOCKED": "Zár bezárva"
+        }
+      },
+      "DIALOG": {
+        "TITLE": "Dokk nyitási műveletek",
+        "CONTENT": "Válasszon a nyitási módok közül!",
+        "ACTIONS": {
+          "OPEN": "Dokk nyitása",
+          "OPEN_AND_STOP_PARKING_SESSION": "Dokk nyitása és parkolás leállítása",
+          "CANCEL": "Mégse"
+        }
+      },
+      "LAST_OPEN_STATE": {
+        "OPENED": "Nyitott",
+        "STUCKED": "Beragadt",
+        "RECLOSED": "Zárt",
+        "IN_PROGRESS": "Folyamatban",
+        "UNKNOWN": "Ismeretlen"
+      },
+      "BOOLEAN": {
+        "TRUE": "Igen",
+        "FALSE": "Nem"
+      }
+    },
+    "USER_DATA_PANEL": {
+      "TITLE": "{{userName}} adatai",
+      "DATA": {
+        "LASTNAME": "Vezetéknév",
+        "FIRSTNAME": "Keresztnév",
+        "EMAIL": "E-mail cím",
+        "PHONE_NUMBER": "Telefonszám",
+        "BIRTH_DATE": "Születési dátum",
+        "GENDER": "Felhasználó neme",
+        "PARKING_BALANCE": "Parkolási egyenleg",
+        "PRIVACY_POLICY_ACCEPTED": "Adatvédelmi irányelvek elfogadva",
+        "SECURITY_QUESTION": "Biztonsági kérdés",
+        "SECURITY_ANSWER": "Biztonsági válasz",
+        "SECURITY_GROUP": "Felhasználó szerepköre"
+      },
+      "GENDER": {
+        "MALE": "Férfi",
+        "FEMALE": "Nő",
+        "OTHER": "Egyéb"
+      },
+      "PRIVACY_POLICY_ACCEPTED": {
+        "TRUE": "Igen",
+        "FALSE": "Nem"
+      },
+      "SECURITY_GROUP": {
+        "ADMIN": "Admin",
+        "USER": "Felhasználó",
+        "UNKNOWN": "Ismeretlen"
+      }
+    },
+    "STATUS": {
+      "ONLINE": "Online",
+      "OFFLINE": "Offline"
+    },
+    "CLIENT_INFORMATION": {
+      "TITLE": {
+        "CREATE": "Kliens információ létrehozása",
+        "EDIT": "Kliens információ szerkesztése"
+      },
+      "FORM": {
+        "INPUT": {
+          "PHONE_CLIENT_VERSION": "Kliens verzió",
+          "VALID_FROM": "Érvényesség kezdete",
+          "VALID_TO": "Érvényesség vége"
+        },
+        "BUTTON": {
+          "CREATE": "Létrehozás",
+          "EDIT_AND_EXIT": "Mentés és kilépés",
+          "EDIT": "Változatások mentése"
+        }
+      }
+    },
+    "PLC_METADATA": {
+      "TITLE": "PLC Metaadatok beállítása",
+      "FORM": {
+        "INPUT": {
+          "PLC_IDENTIFIER": "PLC egyedi azonosítója",
+          "PUBLIC_KEY": "PLC publikus kulcsa",
+          "TOTAL_DOCKS": "Maximálisan engedélyezett dokkok száma",
+          "DOCK_NR": "Dokk száma",
+          "ENABLED": "Engedélyezett"
+        },
+        "BUTTON": {
+          "SAVE": "Mentés"
+        },
+        "DOCK_LIST_FORM": {
+          "TITLE": "Dokkok listája",
+          "TOOLTIP": {
+            "ADD_DOCK": "Dokk felvétele",
+            "DELETE_ALL_DOCKS": "Összes dokk törlése",
+            "DELETE_DOCK": "Dokk törlése"
+          }
+        }
+      }
+    },
+    "STATION_CONNECTION_DATA": {
+      "TITLE": "Állomás kapcsolódási adatok beállítása",
+      "FORM": {
+        "INPUT": {
+          "API_VERSION": "API verziója",
+          "AUTHENTICATION_DATA": "Állomás authentikációs adatai",
+          "HOST": "Hoszt",
+          "PORT": "Port"
+        },
+        "BUTTON": {
+          "SAVE": "Mentés"
+        }
+      }
+    },
+    "SENSOR": {
+      "PAGES": {
+        "SENSOR_LIST": {
+          "TABLE": {
+            "TITLE": "Szenzorok listája",
+            "COLUMNS": {
+              "VALUE": "Szenzor értéke",
+              "NAME": "Szenzor neve",
+              "TYPE": "Szenzor típusa"
+            }
+          }
+        }
+      }
+    },
+    "ORGANIZATION": {
+      "COMPONENTS": {
+        "USERS_OF_ORGANIZATION_LIST": {
+          "TABLE": {
+            "TITLE": "Szervezet felhasználóinak listája",
+            "COLUMNS": {
+              "NAME": "Név",
+              "EMAIL": "E-mail cím",
+              "REMOVE": "Eltávolítás"
+            },
+            "ACTIONS": {
+              "REMOVE": {
+                "TITLE": "Figyelmeztetés",
+                "BODY": "Biztosan eltávolítja a szervezethez tartozó felhasználók listájából?",
+                "OK": "Igen"
+              }
+            }
+          }
+        },
+        "ADD_USER": {
+          "TITLE": "Felhasználó hozzáadása szervezethez",
+          "TOOLTIP": "A felhasználó egyedi azonosítóját a felhasználók menüponton belül a felhasználók listája menüben találhatja meg.",
+          "FORM": {
+            "INPUT": {
+              "USER_ID": "Felhasználó egyedi azonosítója"
+            },
+            "BUTTONS": {
+              "ADD": "Hozzáadás"
+            }
+          }
+        }
+      },
+      "PAGES": {
+        "ORGANIZATION_LIST": {
+          "FILTER": {
+            "PLACEHOLDER": {
+              "NAME": "Név",
+              "ORG_TYPE": "Szervezet típusa"
+            },
+            "INPUT": {
+              "ORG_TYPE": {
+                "OPTIONS": {
+                  "PRIVATE_PERSON": "Magánszemély",
+                  "COMPANY": "Vállalat",
+                  "OTHER": "Egyéb"
+                }
+              }
+            }
+          },
+          "TABLE": {
+            "TITLE": "Szervezetek listája",
+            "COLUMNS": {
+              "NAME": "Név",
+              "SLUG": "Generált azonosító",
+              "ORG_TYPE": {
+                "HEADER": "Szervezet típusa",
+                "OPTIONS": {
+                  "PRIVATE_PERSON": "Magánszemély",
+                  "COMPANY": "Vállalat",
+                  "OTHER": "Egyéb"
+                }
+              },
+              "ENABLED": "Engedélyezett",
+              "CONTEXT": {
+                "LABEL": "Egyéb",
+                "VIEW": "Szervezet megtekintése",
+                "EDIT": "Szervezet szerkesztése"
+              }
+            }
+          }
+        },
+        "ORGANIZATION_FORM": {
+          "TITLE": {
+            "CREATE": "Szervezet létrehozása",
+            "EDIT": "Szervezet szerkesztése"
+          },
+          "FORM": {
+            "INPUT": {
+              "NAME": "Szervezet neve",
+              "ORG_TYPE": {
+                "PLACEHOLDER": "Szervezet típusa",
+                "OPTIONS": {
+                  "PRIVATE_PERSON": "Magánszemély",
+                  "COMPANY": "Vállalat",
+                  "OTHER": "Egyéb"
+                }
+              },
+              "SLUG": "Szervezet egyedi azonosítója",
+              "ENABLED": "Engedélyezett"
+            }
+          }
+        },
+        "ORGANIZATION_VIEW": {
+          "BACK_TEXT": "Vissza a szervezetek listájára",
+          "CONTENT": {
+            "LABEL_PREFIX": {
+              "NAME": "Név",
+              "ORGTYPE": "Szervezet típus",
+              "ENABLED": "Engedélyezett",
+              "SLUG": "Generált azonosító"
+            }
+          }
+        }
+      }
+    },
+    "SHARED": {
+      "COMPONENTS": {
+        "BASE_FORM": {
+          "BUTTON": {
+            "CREATE": "Létrehozás",
+            "EDIT": "Változatások mentése",
+            "EDIT_AND_EXIT": "Mentés és kilépés"
+          }
+        },
+        "AUTOCOMPLETE": {
+          "HINT": "Kérem pontos értéket adjon meg!"
+        },
+        "BASE_DIALOG": {
+          "ACTIONS": {
+            "OK": "Oké",
+            "CANCEL": "Mégse"
+          }
+        }
+      },
+      "PIPES": {
+        "TRANSLATE_COMMON": {
+          "COMPANY": "Vállalat",
+          "PRIVATE_PERSON": "Magánszemély",
+          "OTHER": "Egyéb",
+          "TRUE": "Igen",
+          "FALSE": "Nem"
+        }
+      }
+    },
+    "INPUT": {
+      "DATERANGE_PICKER": {
+        "PLACEHOLDER": {
+          "FROM": "tól",
+          "TO": "ig"
+        }
+      }
+    },
+    "COMMON": {
+      "TOOLTIP": {
+        "NO_PERMISSION": "Ehhez a funckióhoz nincs jogosultsága"
+      }
+    }
+  }
+}

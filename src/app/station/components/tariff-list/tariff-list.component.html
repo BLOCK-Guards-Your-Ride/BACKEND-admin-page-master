@@ -1,0 +1,43 @@
+<h3>{{ 'APP.STATION.FORM.INPUT.TARIFF' | translate }}</h3>
+<mat-accordion class="tariff-accordion">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="title-accordion">
+        {{ 'APP.STATION.FORM.ACCORDION.TARIFF.TITLE' | translate }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ 'APP.STATION.FORM.ACCORDION.DESCRIPTION' | translate }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="tariff-accordion-add">
+      <mat-form-field appearance="legacy">
+        <mat-label>{{ 'APP.STATION.FORM.ACCORDION.TARIFF.TYPE' | translate }}*</mat-label>
+        <mat-select #tariff>
+          <mat-option *ngFor="let type of tariffTypes" [value]="type">
+            {{ 'APP.STATION.FORM.ACCORDION.TARIFF.TYPES.' + type | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button (click)="createTariff(tariff.value)" mat-raised-button>
+          <mat-icon class="material-icons">
+            add
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div *ngFor="let type of selectedTypes; index as id">
+        <ng-container *ngIf="type != null">
+          <div class="tariff-title-wrapper">
+            <p>{{ 'APP.STATION.FORM.ACCORDION.TARIFF.TYPES.' + type | translate }}</p>
+            <mat-icon (click)="spliceIntervalType(id)" class="material-icons">
+              close
+            </mat-icon>
+          </div>
+          <app-tariff-form [tariffTypeId]="id" (tariffFormIsValid)="getTariffFormIsValid($event)" [tariffPeriodList]="tariffPeriodList[id]" (tariffTypes)="getTariffIntervalTypes($event)" [tariffType]="type"></app-tariff-form>
+        </ng-container>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

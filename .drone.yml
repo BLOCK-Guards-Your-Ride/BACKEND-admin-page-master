@@ -1,0 +1,137 @@
+---
+global-variables:
+  version: &set_version export VERSION=$CHART_VERSION-${DRONE_BUILD_NUMBER}
+  maven_image: &maven_image maven:3.6.1-jdk-11
+  default_volumes: &volumes
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: m2-cache
+        path: /root/.m2
+      - name: node-cache
+        path: /drone/src/node_modules
+  environment: &default_environment
+    DOCKER_USERNAME:
+      from_secret: DOCKER_HUB_USERNAME
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_HUB_PASSWORD
+    KUBERNETES_SERVER:
+      from_secret: kubernetes_server
+    CA_DATA:
+      from_secret: ca_data
+    DRONE_CRT:
+      from_secret: drone_ci_user_cert
+    DRONE_KEY:
+      from_secret: drone_ci_user_key
+    CHARTMUSEUM_ENDPOINT:
+      from_secret: chartmuseum_endpoint
+    CHARTMUSEUM_USERNAME:
+      from_secret: chartmuseum_username
+    CHARTMUSEUM_PASSWORD:
+      from_secret: chartmuseum_password
+    CHART_VERSION:
+      from_secret: dev_chart_version
+
+kind: pipeline
+type: kubernetes
+name: default
+
+services:
+  - name: docker
+    image: docker:dind
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+volumes:
+  - name: dockersock
+    temp: {}
+  - name: node-cache
+    host:
+      path: /data/drone/node
+  - name: m2-cache
+    host:
+      path: /data/drone/m2
+
+steps:
+  - name: build
+    image: node:10.15.3
+    <<: *volumes
+    commands:
+      - npm install
+      - npm run-script build-dev
+  - name: push-docker-image
+    image: docker
+    when:
+      branch:
+        - master
+        - config/helm
+    <<: *volumes
+    commands:
+      - *set_version
+      - export IMAGE_NAME=avibike/block-frontend:$VERSION
+      - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
+      - docker build -t $IMAGE_NAME .
+      - docker push $IMAGE_NAME
+    environment:
+      <<: *default_environment
+  #  - name: docker-build
+  #    image: plugins/docker
+  #    environment:
+  #      <<: *default_environment
+  #    settings:
+  #      repo: avibike/block-frontend
+  #      tags:
+  #        - latest
+  #        - ${CHART_VERSION}-${DRONE_BUILD_NUMBER}
+  #      username:
+  #        from_secret: docker_hub_username
+  #      password:
+  #        from_secret: docker_hub_password
+  - name: helm-chart-package-and-push
+    image: maven:3.6.1-jdk-11
+    when:
+      branch:
+        - master
+        - config/helm
+    commands:
+      - cd web-helm
+      - *set_version
+      - mvn versions:set -DnewVersion=$VERSION
+      - mvn process-resources -Phelm
+    <<: *volumes
+    environment:
+      <<: *default_environment
+  - name: dev-deploy
+    image: avibike/kubectl-helm:1
+    when:
+      branch:
+        - master
+        - config/helm
+    commands:
+      - kubectl config set-cluster blockcity-tech --server=$KUBERNETES_SERVER
+      - kubectl config set clusters.blockcity-tech.certificate-authority-data $CA_DATA --set-raw-bytes=false
+      - kubectl config set users.drone-ci-builder.client-certificate-data $DRONE_CRT --set-raw-bytes=false
+      - kubectl config set users.drone-ci-builder.client-key-data $DRONE_KEY --set-raw-bytes=false
+      - kubectl config set-context blockcity --cluster=blockcity-tech --user=drone-ci-builder
+      - kubectl config use-context blockcity
+      # Helm stuff
+      - helm repo add avibike $CHARTMUSEUM_ENDPOINT --username $CHARTMUSEUM_USERNAME --password $CHARTMUSEUM_PASSWORD
+      - helm repo update
+      # Helm upgrade Block Admin Frontend in DEV namespace
+      - *set_version
+      - helm upgrade --install frontend-admin avibike/block-frontend -n dev --version $VERSION
+    environment:
+      <<: *default_environment
+  - name: notify
+    image: plugins/slack
+    settings:
+      webhook: https://hooks.slack.com/services/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
+      template: >
+        {{#success build.status}}
+            A BLOCK frontend {{build.number}}. számú buildje a DEV környezetre telepítődött.
+        {{/success}}
+        {{#failure build.status}}
+           A BLOCK frontend {{build.number}}. számú buildje elhasalt. Kérlek tekintsd meg a logokat
+        {{/failure}}

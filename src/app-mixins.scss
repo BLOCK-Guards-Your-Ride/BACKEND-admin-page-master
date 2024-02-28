@@ -1,0 +1,65 @@
+@import './app-colors';
+
+@mixin list-style {
+  min-width: fit-content;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__table {
+    background-color: $block-white;
+    min-width: 100%;
+  }
+
+  &__spinner {
+    align-self: center;
+    margin-bottom: 1.25rem;
+  }
+
+  &__paginator {
+    background-color: $block-white;
+  }
+}
+
+@mixin column-style($width) {
+  max-width: $width;
+  overflow: hidden;
+  padding-right: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin field-style {
+  align-items: flex-start;
+  border-bottom: 1px solid $block-grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  &--last {
+    border: 0;
+  }
+
+  .field-title {
+    font-weight: 500;
+  }
+
+}
+
+@mixin two-field-style {
+  display: flex;
+  justify-content: stretch;
+
+  .field-title {
+    font-weight: 500;
+  }
+
+  > * {
+    display: flex;
+    flex: 1 0 50%;
+    flex-direction: column;
+  }
+}

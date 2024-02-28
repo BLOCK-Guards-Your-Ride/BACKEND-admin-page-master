@@ -1,0 +1,27 @@
+<div class="menu-wrapper">
+  <ng-container *ngFor="let menu of menuItems">
+    <a
+      class="menu-item"
+      *ngIf="hasPermissions(menu.permissions) && !menu.subMenus"
+      mat-flat-button
+      [routerLink]="menu.href"
+      color="accent">{{ menu.text | translate }}</a>
+    <a
+      class="menu-item"
+      *ngIf="hasPermissions(menu.permissions) && menu.subMenus"
+      mat-flat-button
+      color="accent"
+      [matMenuTriggerFor]="subMenu"
+      >{{ menu.text | translate }}</a>
+    <mat-menu
+      color="accent"
+      #subMenu="matMenu">
+      <ng-container *ngFor="let subMenu of menu.subMenus">
+        <a
+          *ngIf="hasPermissions(subMenu.permissions)"
+          [routerLink]="subMenu.href"
+          mat-menu-item>{{ subMenu.text | translate }}</a>
+      </ng-container>
+    </mat-menu>
+  </ng-container>
+</div>

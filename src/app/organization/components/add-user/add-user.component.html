@@ -1,0 +1,46 @@
+<mat-card
+  class="add-user-card">
+  <mat-card-title
+    class="add-user-card__title">
+    {{ 'APP.ORGANIZATION.COMPONENTS.ADD_USER.TITLE' | translate }}
+    <span class="material-icons" matTooltip="{{ 'APP.ORGANIZATION.COMPONENTS.ADD_USER.TOOLTIP' | translate }}">
+      info
+    </span>
+  </mat-card-title>
+  <app-loading-spinner
+    [isLoading]="isLoading"
+  ></app-loading-spinner>
+  <mat-card-content
+    *ngIf="!isLoading"
+    class="add-user-card-content">
+    <div
+      *ngIf="errorMessage"
+      class="error-box">{{ ('APP.ERROR.ADD_USER.' + errorMessage) | translate  }}</div>
+    <form
+      #addUserForm="ngForm"
+      (ngSubmit)="onSubmit(addUserForm)"
+      class="add-user-card-form">
+      <mat-form-field
+        color="accent">
+        <input
+          matInput
+          ngModel
+          [placeholder]="'APP.ORGANIZATION.COMPONENTS.ADD_USER.FORM.INPUT.USER_ID' | translate"
+          name="userId"
+          type="text"
+          required>
+        <mat-error>
+          {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <button
+        [disabled]="addUserForm.invalid"
+        mat-raised-button
+        color="primary"
+      >
+        <mat-icon>add</mat-icon>
+          {{ 'APP.ORGANIZATION.COMPONENTS.ADD_USER.FORM.BUTTONS.ADD' | translate }}
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

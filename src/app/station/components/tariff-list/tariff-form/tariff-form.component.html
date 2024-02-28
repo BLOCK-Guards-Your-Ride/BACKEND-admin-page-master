@@ -1,0 +1,60 @@
+<div class="tariff-form">
+  <div class="field-wrapper">
+    <mat-form-field hideRequiredMarker appearance="legacy">
+      <mat-label>{{ 'APP.STATION.FORM.ACCORDION.TARIFF.FIELD.FROM_TIME' | translate }}*</mat-label>
+      <input #fromTimeInput="ngModel" [required]="fromTimeInput.touched" matInput type="date" [(ngModel)]="tariffPeriodList.fromTime"
+             (focusout)="updateFromTime(tariffPeriodList.fromTime)">
+    </mat-form-field>
+    <mat-form-field hideRequiredMarker appearance="legacy">
+      <mat-label>{{ 'APP.STATION.FORM.ACCORDION.TARIFF.FIELD.TO_TIME' | translate }}*</mat-label>
+      <input #toTimeInput="ngModel" [required]="toTimeInput.touched" matInput type="date" [(ngModel)]="tariffPeriodList.toTime" (focusout)="updateToTime(tariffPeriodList.toTime)">
+    </mat-form-field>
+  </div>
+
+  <div *ngFor="let tariffIntervalType of tariffPeriodList.tariffIntervalList; let i = index">
+    <div class="field-wrapper" *ngIf="this.tariffType != null">
+      <mat-form-field hideRequiredMarker appearance="legacy">
+        <mat-label>{{ 'APP.STATION.FORM.ACCORDION.TARIFF.FIELD.INTERVAL_FROM' | translate }}*</mat-label>
+        <input #fromTimeInterval="ngModel"
+               *ngIf="tariffType == 'ABSOLUTE'"
+               matInput type="time"
+               [(ngModel)]="tariffIntervalType.fromTime"
+               value="{{ tariffIntervalType.fromTime }}"
+               (focusout)="updateIntervalFromTime()"
+               [required]="fromTimeInterval.touched">
+        <input #fromInterval="ngModel" *ngIf="tariffType == 'RELATIVE'" matInput type="number" [(ngModel)]="tariffIntervalType.from" value="{{ tariffIntervalType.from }}"
+               (focusout)="updateIntervalFrom()" [required]="fromInterval.touched">
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker appearance="legacy">
+        <mat-label>{{ 'APP.STATION.FORM.ACCORDION.TARIFF.FIELD.INTERVAL_TO' | translate }}*</mat-label>
+        <input #toTime="ngModel"
+               *ngIf="tariffType == 'ABSOLUTE'" matInput type="time"
+               [(ngModel)]="tariffIntervalType.toTime"
+               value="{{ tariffIntervalType.toTime }}"
+               (focusout)="updateIntervalToTime()"
+               [required]="toTime.touched">
+        <input #to="ngModel"
+               *ngIf="tariffType == 'RELATIVE'"
+               matInput type="number"
+               [(ngModel)]="tariffIntervalType.to"
+               value="{{ tariffIntervalType.to }}"
+               (focusout)="updateIntervalTo()" [required]="to.touched">
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker appearance="legacy">
+        <mat-label>{{ 'APP.STATION.FORM.ACCORDION.TARIFF.FIELD.PRICE' | translate }}*</mat-label>
+        <input #price="ngModel" matInput type="number" [(ngModel)]="tariffIntervalType.price" value="{{ tariffIntervalType.price }}" (focusout)="updatePrice()"
+               [required]="price.touched">
+      </mat-form-field>
+      <mat-icon (click)="spliceIntervalType(i)" class="material-icons">
+        close
+      </mat-icon>
+    </div>
+  </div>
+  <div class="btn-wrapper">
+    <button (click)="createTariffIntervalType()" mat-raised-button>
+      <mat-icon class="material-icons">
+        add
+      </mat-icon>
+    </button>
+  </div>
+</div>

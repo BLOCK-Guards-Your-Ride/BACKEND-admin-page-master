@@ -1,0 +1,14 @@
+<div class="data-view">
+  <div
+    class="data-view__item"
+    [ngClass]="{
+      'data-view__item--last': _keys(data).length <= i
+        + (_keys(data).length % 2 === 0 ? 2 : 1)
+    }"
+    *ngFor="let property of _keys(data); index as i">
+    <span class="field-title">{{ labelPrefix + '.' + (property | uppercase) | translate }}</span>
+    <span>
+      {{ getPipe(property)?.transform(data[property]) || data[property] }}
+    </span>
+  </div>
+</div>

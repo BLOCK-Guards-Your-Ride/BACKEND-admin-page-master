@@ -1,0 +1,56 @@
+<app-base-form
+  class="organization-base-form"
+  [formGroup]="formGroup"
+  [title]="isEdit ? 'APP.ORGANIZATION.PAGES.ORGANIZATION_FORM.TITLE.EDIT' : 'APP.ORGANIZATION.PAGES.ORGANIZATION_FORM.TITLE.CREATE'"
+  [errorMessage]="errorMessage"
+  errorPrefix="APP.ERROR.ORGANIZATION_FORM."
+  [onSave]="onSave.bind(this)"
+  [onCreate]="onCreate.bind(this)"
+  [onSaveAndExit]="onSaveAndExit.bind(this)"
+  [isEdit]="isEdit"
+  [backRoute]="backRoute"
+  [backText]="backText"
+  [isLoading]="isLoading"
+>
+  <mat-form-field color="accent">
+    <input
+      matInput
+      required
+      [placeholder]="'APP.ORGANIZATION.PAGES.ORGANIZATION_FORM.FORM.INPUT.NAME' | translate"
+      formControlName="name"
+      type="text">
+    <mat-error *ngIf="name && name.invalid && name.touched">
+      {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field color="accent">
+    <mat-select
+      required
+      [placeholder]="'APP.ORGANIZATION.PAGES.ORGANIZATION_FORM.FORM.INPUT.ORG_TYPE.PLACEHOLDER' | translate"
+      formControlName="orgType"
+    >
+      <mat-option *ngFor="let orgType of orgTypes" [value]="orgType">
+        {{ 'APP.ORGANIZATION.PAGES.ORGANIZATION_FORM.FORM.INPUT.ORG_TYPE.OPTIONS.' + orgType | translate }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="type && type.invalid && type.touched">
+      {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field
+    *ngIf="isEdit"
+    color="accent">
+    <input
+      matInput
+      [placeholder]="'APP.ORGANIZATION.PAGES.ORGANIZATION_FORM.FORM.INPUT.SLUG' | translate"
+      [value]="formInfo.slug"
+      disabled
+      type="text">
+  </mat-form-field>
+  <mat-slide-toggle
+    *ngIf="isEdit"
+    color="accent"
+    formControlName="enabled">
+    {{ 'APP.ORGANIZATION.PAGES.ORGANIZATION_FORM.FORM.INPUT.ENABLED' | translate }}
+  </mat-slide-toggle>
+</app-base-form>

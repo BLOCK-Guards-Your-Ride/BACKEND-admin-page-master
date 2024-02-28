@@ -1,0 +1,25 @@
+@import './../../../../app-mixins';
+
+.user-data-panel {
+  &--list {
+    @include list-style;
+  }
+
+  &-content {
+    > * {
+      margin-bottom: 1.25rem;
+    }
+  }
+}
+
+.name-box,
+.email-phone-number-box,
+.birthdate-gender-box,
+.parking-balance-privacy-policy-accepted-box,
+.security-box {
+  @include two-field-style;
+}
+
+.security-group-box {
+  @include field-style;
+}

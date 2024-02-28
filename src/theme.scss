@@ -1,0 +1,38 @@
+@import '~@angular/material/theming';
+@import './app-colors';
+
+@include mat-core;
+
+$block-app-yellow: (
+  100: $block-yellow,
+  contrast: (
+    100: #3e3d40,
+  )
+);
+
+$block-app-grey: (
+  100: $block-grey,
+  contrast: (
+    100: #ffed00,
+  )
+);
+
+$block-app-primary: mat-palette($block-app-yellow, 100);
+$block-app-accent: mat-palette($block-app-grey, 100);
+
+$block-app-theme: mat-light-theme($block-app-primary, $block-app-accent);
+
+@include angular-material-theme($block-app-theme);
+
+.mat-card {
+  background-color: $block-white;
+  margin-bottom: 1.25rem;
+}
+
+.error-box {
+  background-color: $block-red;
+  color: $block-white;
+  font-weight: 500;
+  margin: .3rem 0;
+  padding: .6rem;
+}

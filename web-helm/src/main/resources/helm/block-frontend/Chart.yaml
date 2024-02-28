@@ -1,0 +1,6 @@
+apiVersion: v2
+name: block-frontend
+description: A Helm chart for BLOCK Admin Frontend
+type: application
+version: ${project.version}
+appVersion: ${project.version}

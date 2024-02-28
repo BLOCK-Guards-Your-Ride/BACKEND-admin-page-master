@@ -1,0 +1,57 @@
+<app-back-button
+  *ngIf="isEdit"
+  [backText]="backText"
+  [route]="backRoute"
+>
+</app-back-button>
+<mat-card class="form-card">
+  <mat-card-title>
+    {{ title | translate }}
+  </mat-card-title>
+  <app-loading-spinner
+  [isLoading]="isLoading"
+  ></app-loading-spinner>
+  <mat-card-content>
+    <div
+      *ngIf="errorMessage"
+      class="error-box">{{ (errorPrefix + errorMessage) | translate  }}</div>
+    <form
+      *ngIf="!isLoading"
+      class="form-card-form"
+      [formGroup]="formGroup">
+      <ng-content></ng-content>
+      <div class="form-card-form-actions">
+        <button
+          type="button"
+          class="form-card-form-actions__save-and-exit"
+          *ngIf="isEdit"
+          [disabled]="formGroup.invalid"
+          mat-raised-button
+          (click)="onSaveAndExit()"
+          color="accent">
+          {{ 'APP.SHARED.COMPONENTS.BASE_FORM.BUTTON.EDIT_AND_EXIT' | translate }}
+        </button>
+        <button
+          type="button"
+          *ngIf="isEdit"
+          class="form-card-form-actions__save"
+          [disabled]="formGroup.invalid"
+          (click)="onSave()"
+          mat-raised-button
+          color="primary">
+          {{ 'APP.SHARED.COMPONENTS.BASE_FORM.BUTTON.EDIT' | translate }}
+        </button>
+        <button
+          type="button"
+          *ngIf="!isEdit"
+          class="form-card-form-actions__create"
+          [disabled]="formGroup.invalid"
+          (click)="onCreate()"
+          mat-raised-button
+          color="primary">
+          {{ 'APP.SHARED.COMPONENTS.BASE_FORM.BUTTON.CREATE' | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

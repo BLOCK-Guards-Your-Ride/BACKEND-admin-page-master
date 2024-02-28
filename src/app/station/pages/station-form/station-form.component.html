@@ -1,0 +1,187 @@
+<app-back-button
+  *ngIf="station?.stationId"
+  backText="APP.BACK_BUTTON.BACK_TO_STATION_LIST"
+  [route]="backRoute"
+>
+</app-back-button>
+<mat-card class="station-card">
+  <mat-card-title>
+    {{ (station?.stationId) ? ('APP.STATION.TITLE.EDIT' | translate) : ('APP.STATION.TITLE.CREATE' | translate) }}
+  </mat-card-title>
+  <app-loading-spinner
+  [isLoading]="isLoading"
+  ></app-loading-spinner>
+  <mat-card-content>
+    <div
+      *ngIf="errorMessage"
+      class="error-box">{{ ('APP.ERROR.STATION_FORM.' + errorMessage) | translate  }}</div>
+    <form
+      *ngIf="!isLoading"
+      class="station-card-form"
+      [formGroup]="stationFormGroup">
+      <mat-form-field color="accent">
+        <input
+          matInput
+          [placeholder]="'APP.STATION.FORM.INPUT.NAME_OF_STATION' | translate"
+          type="text"
+          formControlName="name"
+          required
+        >
+        <mat-error>
+            {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        class="station-card-form__station-qr-code"
+        color="accent">
+        <input
+          matInput
+          [placeholder]="'APP.STATION.FORM.INPUT.QR_CODE_OF_STATION' | translate"
+          type="text"
+          formControlName="stationQrCode"
+          required
+          maxlength="247"
+        >
+        <mat-hint *ngIf="stationFormGroup.get('stationQrCode')?.value">
+          <span class="description-hint--blue">
+            {{ 'APP.STATION.FORM.HINT.PREVIEW' | translate }}
+          </span>
+          {{ (stationFormGroup.get('stationQrCode')?.value | uppercase) + ('APP.STATION.FORM.HINT.STATION_SUFFIX' | translate) }}
+        </mat-hint>
+        <mat-error
+          *ngIf="stationFormGroup.get('stationQrCode')?.hasError('required')
+            && stationFormGroup.get('stationQrCode')?.touched">
+          {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+        </mat-error>
+        <mat-error
+          *ngIf="stationFormGroup.get('stationQrCode')?.hasError('maxlength')
+            && stationFormGroup.get('stationQrCode')?.touched">
+          {{ 'APP.ERROR.FORM.INPUT.MAX_LENGTH' | translate: { maxlength: '255' } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color="accent">
+        <input
+          matInput
+          [placeholder]="'APP.STATION.FORM.INPUT.ADDRESS' | translate"
+          type="text"
+          formControlName="address"
+          required
+        >
+        <mat-error>
+            {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color="accent">
+        <input
+          matInput
+          [placeholder]="'APP.STATION.FORM.INPUT.DESCRIPTION' | translate"
+          type="text"
+          formControlName="description"
+        >
+      </mat-form-field>
+      <h3>{{ 'APP.STATION.FORM.INPUT.POSITION' | translate }}</h3>
+      <div
+        class="station-no-geo"
+        *ngIf="isCoordsLoading">
+        <span class="station-no-geo__span">{{ 'APP.STATION.FORM.ACCORDION.GEO_LOADING' | translate }}</span>
+        <mat-spinner
+          [diameter]="30"
+          mode="indeterminate"
+        ></mat-spinner>
+      </div>
+      <mat-accordion class="station-accordion">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title class="title-accordion">
+              {{ 'APP.STATION.FORM.ACCORDION.TITLE' | translate }}
+              <span
+                class="title-accordion--red"
+                *ngIf="stationFormGroup.get('position').touched && (
+                  stationFormGroup.get('position').get('lat').errors?.required
+                  || stationFormGroup.get('position').get('lng').errors?.required
+                )"
+              > {{ 'APP.STATION.FORM.ACCORDION.INCORRECT_FILL' | translate }}</span>
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ 'APP.STATION.FORM.ACCORDION.DESCRIPTION' | translate }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-google-map
+            [lat]="position.lat"
+            [lng]="position.lng"
+            [markerLat]="positionFormGroup.getRawValue().lat"
+            [markerLng]="positionFormGroup.getRawValue().lng"
+            (mapClick)="onMapClick($event)"
+            [height]="300"></app-google-map>
+          <div class="station-coordinates" [formGroup]="positionFormGroup">
+            <mat-form-field
+              class="station-coordinates__lat"
+              color="accent">
+              <input
+                matInput
+                [placeholder]="'APP.STATION.FORM.INPUT.LATITUDE' | translate"
+                type="number"
+                formControlName="lat"
+                required
+              >
+              <mat-error>
+                {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              class="station-coordinates__lng"
+              color="accent">
+              <input
+                matInput
+                [placeholder]="'APP.STATION.FORM.INPUT.LONGITUDE' | translate"
+                type="number"
+                formControlName="lng"
+                required
+              >
+              <mat-error>
+                {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div *ngIf="station?.stationId" class="tariff-accordion-wrapper">
+        <app-tariff-list (tariffFormIsValidEmitter)="setTariffFormIsValid($event)" [tariffPeriodList]="tariffPeriodList" (tariffIntervalTypesEmitter)="setTariffIntervalTypes($event)"></app-tariff-list>
+      </div>
+
+      <div class="station-card-form-actions">
+        <button
+          type="button"
+          class="station-card-form-actions__save-and-exit"
+          *ngIf="station?.stationId"
+          [disabled]="stationFormGroup.invalid || tariffFieldStates?.includes(false)"
+          mat-raised-button
+          (click)="saveStationAndExit()"
+          color="accent">
+          {{ 'APP.STATION.FORM.BUTTON.EDIT_AND_EXIT' | translate }}
+        </button>
+        <button
+          type="button"
+          *ngIf="station?.stationId"
+          class="station-card-form-actions__save"
+          [disabled]="stationFormGroup.invalid || tariffFieldStates?.includes(false)"
+          (click)="saveStation()"
+          mat-raised-button
+          color="primary">
+          {{ 'APP.STATION.FORM.BUTTON.EDIT' | translate }}
+        </button>
+        <button
+          type="button"
+          *ngIf="!(station?.stationId)"
+          class="station-card-form-actions__create"
+          [disabled]="stationFormGroup.invalid"
+          (click)="createStation()"
+          mat-raised-button
+          color="primary">
+          {{ 'APP.STATION.FORM.BUTTON.CREATE' | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

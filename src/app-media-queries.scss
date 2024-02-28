@@ -1,0 +1,11 @@
+@mixin lt-desktop {
+  @media screen and (max-width: 720 - 1px) {
+    @content;
+  }
+}
+
+@mixin gt-desktop {
+  @media screen and (min-width: 720px) {
+    @content;
+  }
+}

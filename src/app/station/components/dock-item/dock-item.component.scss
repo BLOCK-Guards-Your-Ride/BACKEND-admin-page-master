@@ -1,0 +1,16 @@
+:host {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  .dock-item {
+    &__dock-nr {
+      flex: 1 1 calc(70% - 1.25rem);
+      margin-right: 1.25rem;
+    }
+
+    &__enabled {
+      flex: 1 0 15%;
+    }
+  }
+}

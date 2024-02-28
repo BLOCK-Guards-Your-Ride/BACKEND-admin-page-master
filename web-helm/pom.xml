@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>hu.adamasystems.avibike</groupId>
+  <artifactId>web-helm</artifactId>
+  <version>1.1.0-SNAPSHOT</version>
+
+  <properties>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <helm-maven-plugin.version>2.8.2.1.1.1</helm-maven-plugin.version>
+    <kiwigrid.helm-maven-plugin.version>5.3</kiwigrid.helm-maven-plugin.version>
+  </properties>
+
+  <build>
+    <extensions>
+      <extension>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>os-maven-plugin</artifactId>
+        <version>1.6.0</version>
+      </extension>
+    </extensions>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/generated-resources/helm</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/resources/helm</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.microbean</groupId>
+        <artifactId>helm-maven-plugin</artifactId>
+        <version>${helm-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>Package chart block-backend</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>package</goal>
+            </goals>
+            <configuration>
+              <chartContentsUri>file:${project.build.directory}/generated-resources/helm/block-frontend
+              </chartContentsUri>
+              <chartTargetUri>file:${project.build.directory}/helm/block-frontend-${project.version}.tgz
+              </chartTargetUri>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

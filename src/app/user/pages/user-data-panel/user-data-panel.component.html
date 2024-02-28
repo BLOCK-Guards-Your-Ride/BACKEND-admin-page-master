@@ -1,0 +1,76 @@
+<app-back-button
+  backText="APP.BACK_BUTTON.BACK_TO_USER_LIST"
+  [route]="backRoute"
+>
+</app-back-button>
+<mat-card class="user-data-panel--list">
+  <mat-card-title>
+    {{ 'APP.USER_DATA_PANEL.TITLE' | translate: { userName: user.firstName } }}
+  </mat-card-title>
+  <mat-card-content class="user-data-panel-content">
+    <div class="name-box">
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.LASTNAME' | translate }}</span>
+        <span>{{ user.lastName }}</span>
+      </div>
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.FIRSTNAME' | translate }}</span>
+        <span>{{ user.firstName }}</span>
+      </div>
+    </div>
+    <hr/>
+    <div class="email-phone-number-box">
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.EMAIL' | translate }}</span>
+        <span>{{ user.email }}</span>
+      </div>
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.PHONE_NUMBER' | translate }}</span>
+        <span>{{ user.phoneNumber }}</span>
+      </div>
+    </div>
+    <hr/>
+    <div class="birthdate-gender-box">
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.BIRTH_DATE' | translate }}</span>
+        <span>{{ user.birthDate | date:'y.MM.dd.' }}</span>
+      </div>
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.GENDER' | translate }}</span>
+        <span>{{ 'APP.USER_DATA_PANEL.GENDER.' + user.gender | uppercase | translate }}</span>
+      </div>
+    </div>
+    <hr/>
+    <div class="parking-balance-privacy-policy-accepted-box">
+      <div>
+        <span class="field-title">Parkolási egyenleg</span>
+        <span>{{ user.parkingBalance }}</span>
+      </div>
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.PRIVACY_POLICY_ACCEPTED' | translate }}</span>
+        <span>
+          {{ 'APP.USER_DATA_PANEL.PRIVACY_POLICY_ACCEPTED.' + user.privacyPolicyAccepted | uppercase | translate }}
+        </span>
+      </div>
+    </div>
+    <hr/>
+    <div class="security-box">
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.SECURITY_QUESTION' | translate }}</span>
+        <span>{{ user.securityQuestion }}</span>
+      </div>
+      <div>
+        <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.SECURITY_ANSWER' | translate }}</span>
+        <span>{{ user.securityAnswer }}</span>
+      </div>
+    </div>
+    <hr/>
+    <div class="security-group-box">
+      <span class="field-title">{{ 'APP.USER_DATA_PANEL.DATA.SECURITY_GROUP' | translate }}</span>
+      <span>
+        {{ 'APP.USER_DATA_PANEL.SECURITY_GROUP.' + user.securityGroup | uppercase | translate }}
+      </span>
+    </div>
+  </mat-card-content>
+  <app-parking-session-list [userId]="user.id"></app-parking-session-list>
+</mat-card>

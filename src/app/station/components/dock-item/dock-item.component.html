@@ -1,0 +1,31 @@
+<mat-form-field
+  class="dock-item__dock-nr"
+  color="accent">
+  <input
+    matInput
+    name="dockNr"
+    required
+    type="number"
+    [ngModel]="dockItem.dockNr"
+    (ngModelChange)="updateDockNr($event)"
+    [placeholder]="'APP.PLC_METADATA.FORM.INPUT.DOCK_NR' | translate"
+  >
+  <mat-error>
+      {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+  </mat-error>
+</mat-form-field>
+<mat-slide-toggle
+  [ngModel]="dockItem.enabled"
+  (change)="updateEnabled($event)"
+  [checked]="false"
+  class="dock-item__enabled"
+  color="warn">{{ 'APP.PLC_METADATA.FORM.INPUT.ENABLED' | translate }}</mat-slide-toggle>
+<button
+  class="dock-item__delete"
+  mat-icon-button
+  [matTooltip]="'APP.PLC_METADATA.FORM.DOCK_LIST_FORM.TOOLTIP.DELETE_DOCK' | translate"
+  type="button"
+  (click)="deleteSelf()"
+>
+  <mat-icon>delete</mat-icon>
+</button>

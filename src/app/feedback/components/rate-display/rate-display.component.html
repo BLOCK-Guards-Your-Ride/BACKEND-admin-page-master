@@ -1,0 +1,11 @@
+<div [matTooltip]="rate">
+  <mat-icon
+    class="rate"
+    *ngFor="let x of ' '.repeat(10).split(''); index as i">
+     {{ (i + 1) <= rate
+      ? 'star'
+      : (i + 1) - rate === .10
+        ? 'star_half'
+        : 'star_border' }}
+  </mat-icon>
+</div>

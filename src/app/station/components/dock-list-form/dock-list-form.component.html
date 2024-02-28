@@ -1,0 +1,29 @@
+<div class="dock-list-form">
+  <div class="dock-list-form-title">
+    <h3>{{ 'APP.PLC_METADATA.FORM.DOCK_LIST_FORM.TITLE' | translate }}</h3>
+    <div class="dock-list-form-title-actions">
+      <button
+        type="button"
+        mat-icon-button
+        [matTooltip]="'APP.PLC_METADATA.FORM.DOCK_LIST_FORM.TOOLTIP.ADD_DOCK' | translate"
+        (click)="addDock()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+      <button
+        type="button"
+        mat-icon-button
+        [matTooltip]="'APP.PLC_METADATA.FORM.DOCK_LIST_FORM.TOOLTIP.DELETE_ALL_DOCKS' | translate"
+        (click)="deleteAllDocks()"
+      >
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+    </div>
+  </div>
+  <app-dock-item
+    [@newItem]
+    *ngFor="let dock of dockList; index as i"
+    [dockItem]="dock"
+    (delete)="deleteDock(i)"
+    (updateDockItem)="updateDockItem($event, i)"></app-dock-item>
+</div>

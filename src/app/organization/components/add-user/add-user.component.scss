@@ -1,0 +1,11 @@
+.add-user-card {
+  &-form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+
+    .mat-form-field {
+      margin-bottom: .5rem;
+    }
+  }
+}

@@ -1,0 +1,67 @@
+@import './../../../../app-mixins';
+@import './../../../../app-colors';
+
+.station-list {
+  @include list-style;
+
+  &__table {
+
+    .mat-column-station-qr-code,
+    .mat-column-name {
+      @include column-style(9rem);
+    }
+
+    .mat-column-docks {
+      @include column-style(7.5rem);
+      white-space: pre-wrap;
+    }
+
+    .mat-column-lat,
+    .mat-column-lng,
+    .mat-column-status {
+      @include column-style(3.75rem);
+    }
+
+    .mat-column-edit {
+      @include column-style(3.75rem);
+      text-align: center;
+    }
+  }
+
+  &-filter {
+    display: flex;
+    flex-direction: column;
+
+    .first-row,
+    .second-row {
+      display: flex;
+      justify-content: space-between;
+
+      @media screen and (max-width: 49rem) {
+        flex-direction: column;
+      }
+
+    }
+
+    &__input {
+      flex-grow: 1;
+      margin-right: 1.25rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @media screen and (max-width: 49rem) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.station-list__table {
+  .mat-column-state {
+    .mat-icon {
+      color: $block-grey-faint;
+    }
+  }
+}

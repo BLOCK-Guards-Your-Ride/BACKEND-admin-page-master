@@ -1,0 +1,101 @@
+<app-back-button
+  *ngIf="clientInformation?.id"
+  backText="APP.BACK_BUTTON.BACK_TO_CLIENT_INFORMATION_LIST"
+  [route]="backRoute"
+>
+</app-back-button>
+<mat-card class="client-information-card">
+  <mat-card-title class="client-information-card__title">
+    {{ (clientInformation?.id) ? ('APP.CLIENT_INFORMATION.TITLE.EDIT' | translate) : ('APP.CLIENT_INFORMATION.TITLE.CREATE' | translate) }}
+  </mat-card-title>
+  <app-loading-spinner
+    [isLoading]="isLoading"
+  ></app-loading-spinner>
+  <mat-card-content>
+    <div
+      *ngIf="errorMessage"
+      class="error-box">
+      {{ ('APP.ERROR.CLIENT_INFORMATION_FORM.' + errorMessage) | translate  }}
+    </div>
+    <form
+      *ngIf="!isLoading"
+      [formGroup]="clientInformationFormGroup"
+      class="client-information-form"
+    >
+      <mat-form-field color="accent">
+        <input
+          matInput
+          required
+          formControlName="phoneClientVersion"
+          [placeholder]="'APP.CLIENT_INFORMATION.FORM.INPUT.PHONE_CLIENT_VERSION' | translate">
+          <mat-error>
+            {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field color="accent">
+        <input
+          required
+          formControlName="validFrom"
+          [placeholder]="'APP.CLIENT_INFORMATION.FORM.INPUT.VALID_FROM' | translate"
+          [matDatepicker]="pickerFrom"
+          matInput>
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+        <mat-error *ngIf="clientInformationFormGroup.get('validFrom')?.hasError('matDatepickerParse')
+          && clientInformationFormGroup.get('validFrom')?.touched">
+          {{ 'APP.ERROR.FORM.INPUT.INCORRECT_DATE' | translate }}
+        </mat-error>
+        <mat-error *ngIf="clientInformationFormGroup.get('validFrom')?.hasError('required')
+          && !clientInformationFormGroup.get('validFrom')?.hasError('matDatepickerParse')
+          && clientInformationFormGroup.get('validFrom')?.touched">
+          {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color="accent">
+        <input
+          formControlName="validTo"
+          [placeholder]="'APP.CLIENT_INFORMATION.FORM.INPUT.VALID_TO' | translate"
+          [matDatepicker]="pickerTo"
+          matInput>
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+        <mat-error *ngIf="clientInformationFormGroup.get('validTo')?.hasError('matDatepickerParse')
+          && clientInformationFormGroup.get('validTo')?.touched">
+          {{ 'APP.ERROR.FORM.INPUT.INCORRECT_DATE' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <div class="client-information-card-form-actions">
+        <button
+          class="client-information-card-form-actions__save-and-exit"
+          *ngIf="clientInformation?.id"
+          [disabled]="clientInformationFormGroup.invalid"
+          mat-raised-button
+          (click)="saveClientInformationAndExit()"
+          type="button"
+          color="accent">
+          {{ 'APP.CLIENT_INFORMATION.FORM.BUTTON.EDIT_AND_EXIT' | translate }}
+        </button>
+        <button
+          *ngIf="clientInformation?.id"
+          class="client-information-card-form-actions__save"
+          [disabled]="clientInformationFormGroup.invalid"
+          (click)="saveClientInformation()"
+          mat-raised-button
+          type="button"
+          color="primary">
+          {{ 'APP.CLIENT_INFORMATION.FORM.BUTTON.EDIT' | translate }}
+        </button>
+        <button
+          *ngIf="!(clientInformation?.id)"
+          class="client-information-card-form-actions__create"
+          [disabled]="clientInformationFormGroup.invalid"
+          (click)="createClientInformation()"
+          mat-raised-button
+          type="button"
+          color="primary">
+          {{ 'APP.CLIENT_INFORMATION.FORM.BUTTON.CREATE' | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

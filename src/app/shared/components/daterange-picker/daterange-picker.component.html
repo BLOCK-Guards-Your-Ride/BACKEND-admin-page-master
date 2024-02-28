@@ -1,0 +1,54 @@
+<div class="daterange-picker">
+  <mat-label class="daterange-picker__label">{{ placeholder | translate }}</mat-label>
+  <div class="daterange-picker-container">
+    <mat-form-field
+      class="picker"
+      floatLabel="never"
+      color="accent">
+      <input
+        #from="ngModel"
+        name="from"
+        ngModel
+        [required]="required"
+        (ngModelChange)="fromUpdate.emit($event)"
+        [placeholder]="'APP.INPUT.DATERANGE_PICKER.PLACEHOLDER.FROM' | translate"
+        [matDatepicker]="pickerFrom"
+        matInput>
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+      <mat-error *ngIf="from.hasError('matDatepickerParse') && from.touched">
+        {{ 'APP.ERROR.FORM.INPUT.INCORRECT_DATE' | translate }}
+      </mat-error>
+      <mat-error *ngIf="from.hasError('required')
+        && !from.hasError('matDatepickerParse')
+        && from.touched">
+        {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <span class="separator">-</span>
+    <mat-form-field
+      class="picker"
+      floatLabel="never"
+      color="accent">
+      <input
+        #to="ngModel"
+        name="to"
+        ngModel
+        (ngModelChange)="toUpdate.emit($event)"
+        [required]="required"
+        [placeholder]="'APP.INPUT.DATERANGE_PICKER.PLACEHOLDER.TO' | translate"
+        [matDatepicker]="pickerTo"
+        matInput>
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+      <mat-error *ngIf="to.hasError('matDatepickerParse') && to.touched">
+        {{ 'APP.ERROR.FORM.INPUT.INCORRECT_DATE' | translate }}
+      </mat-error>
+      <mat-error *ngIf="to.hasError('required')
+        && !to.hasError('matDatepickerParse')
+        && to.touched">
+        {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>

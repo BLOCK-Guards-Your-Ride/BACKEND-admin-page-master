@@ -1,0 +1,67 @@
+<app-back-button
+  backText="APP.BACK_BUTTON.BACK_TO_STATION_LIST"
+  [route]="backRoute"
+>
+</app-back-button>
+<mat-card class="station-connection-data-card">
+  <mat-card-title>
+    {{ 'APP.STATION_CONNECTION_DATA.TITLE' | translate }}
+  </mat-card-title>
+  <mat-card-content>
+      <div
+      *ngIf="errorMessage"
+      class="error-box">{{ ('APP.ERROR.STATION_CONNECTION_DATA_FORM.' + errorMessage) | translate  }}</div>
+      <form
+        [formGroup]="stationConnectionDataFromGroup"
+        class="station-connection-data-card-form"
+        #form="ngForm"
+        (ngSubmit)="submitStationConnectionData(form)">
+
+        <mat-form-field color="accent">
+          <input
+            matInput
+            formControlName="apiVersion"
+            required
+            [placeholder]="'APP.STATION_CONNECTION_DATA.FORM.INPUT.API_VERSION' | translate"
+          >
+          <mat-error>
+              {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent">
+          <input
+            matInput
+            formControlName="authenticationData"
+            [placeholder]="'APP.STATION_CONNECTION_DATA.FORM.INPUT.AUTHENTICATION_DATA' | translate"
+          >
+        </mat-form-field>
+        <mat-form-field color="accent">
+          <input
+            matInput
+            formControlName="host"
+            required
+            [placeholder]="'APP.STATION_CONNECTION_DATA.FORM.INPUT.HOST' | translate"
+          >
+          <mat-error>
+            {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent">
+          <input
+            matInput
+            formControlName="port"
+            type="number"
+            [placeholder]="'APP.STATION_CONNECTION_DATA.FORM.INPUT.PORT' | translate"
+          >
+        </mat-form-field>
+        <button
+          class="station-connection-data-card-form__submit"
+          [disabled]="form.invalid"
+          mat-raised-button
+          color="primary"
+        >
+          {{ 'APP.STATION_CONNECTION_DATA.FORM.BUTTON.SAVE' | translate }}
+        </button>
+      </form>
+  </mat-card-content>
+</mat-card>

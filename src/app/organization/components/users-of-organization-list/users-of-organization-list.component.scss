@@ -1,0 +1,23 @@
+@import './../../../../app-mixins';
+@import './../../../../app-colors';
+
+.user-list {
+  @include list-style;
+
+  &__table {
+
+    padding-bottom: 2rem;
+
+    .mat-column-email,
+    .mat-column-name {
+      @include column-style(9rem);
+    }
+
+    .mat-column-remove {
+      @include column-style(2rem);
+      text-align: center;
+    }
+
+  }
+
+}

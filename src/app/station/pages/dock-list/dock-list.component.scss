@@ -1,0 +1,22 @@
+@import './../../../../app-mixins';
+
+.dock-list {
+  @include list-style;
+
+  &__table {
+
+    .mat-column-dock-nr,
+    .mat-column-enabled,
+    .mat-column-last-open-state,
+    .mat-column-bolt-locked,
+    .mat-column-occupied {
+      @include column-style(6.25rem);
+    }
+
+    .mat-column-operation {
+      @include column-style(3.75rem);
+      text-align: center;
+    }
+
+  }
+}

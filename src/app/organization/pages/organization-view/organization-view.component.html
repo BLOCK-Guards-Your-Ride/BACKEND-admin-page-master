@@ -1,0 +1,17 @@
+<app-back-button
+  [backText]="'APP.ORGANIZATION.PAGES.ORGANIZATION_VIEW.BACK_TEXT'"
+  [route]="backRoute"
+></app-back-button>
+<mat-card class="organization-view">
+  <mat-card-title class="organization-view__title">
+    Szervezet adatai
+  </mat-card-title>
+  <mat-card-content class="organization-view-content">
+    <app-data-view
+      [data]="organizationInfo"
+      labelPrefix="APP.ORGANIZATION.PAGES.ORGANIZATION_VIEW.CONTENT.LABEL_PREFIX"
+      [pipes]="pipes"></app-data-view>
+  </mat-card-content>
+</mat-card>
+<app-add-user></app-add-user>
+<app-users-of-organization-list></app-users-of-organization-list>

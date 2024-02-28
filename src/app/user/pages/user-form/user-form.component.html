@@ -1,0 +1,171 @@
+<mat-card class="admin-card">
+  <mat-card-title class="admin-card__title">
+    {{ 'APP.USER.TITLE' | translate }}
+  </mat-card-title>
+  <app-loading-spinner
+    [isLoading]="isLoading"
+  ></app-loading-spinner>
+  <mat-card-content>
+    <div
+      *ngIf="errorMessage"
+      class="error-box">
+      {{ ('APP.ERROR.ADMIN_FORM.' + errorMessage) | translate  }}
+    </div>
+    <form
+      *ngIf="!isLoading"
+      appPasswordValidator
+      #form="ngForm"
+      class="admin-form"
+      (ngSubmit)="createAdmin(form)"
+    >
+      <div class="field-container">
+        <mat-form-field color="accent">
+          <input
+            matInput
+            required
+            name="lastName"
+            ngModel
+            [placeholder]="'APP.USER.FORM.INPUT.LAST_NAME' | translate">
+            <mat-error>
+              {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent">
+          <input
+            matInput
+            required
+            name="firstName"
+            ngModel
+            [placeholder]="'APP.USER.FORM.INPUT.FIRST_NAME' | translate">
+            <mat-error>
+              {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+            </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field color="accent">
+        <input
+          #email="ngModel"
+          matInput
+          required
+          email
+          name="email"
+          ngModel
+          [placeholder]="'APP.USER.FORM.INPUT.EMAIL' | translate">
+          <mat-error *ngIf="email.hasError('email') && email.touched">
+            {{ 'APP.ERROR.FORM.INPUT.INCORRECT_EMAIL' | translate }}
+          </mat-error>
+          <mat-error *ngIf="email.hasError('required') && email.touched">
+            {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+          </mat-error>
+      </mat-form-field>
+      <div class="field-container">
+        <mat-form-field color="accent">
+          <input
+            matInput
+            required
+            type="password"
+            name="password"
+            ngModel
+            [placeholder]="'APP.USER.FORM.INPUT.PASSWORD' | translate">
+            <mat-error>
+              {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent">
+          <input
+            matInput
+            required
+            type="password"
+            name="passwordAgain"
+            ngModel
+            [placeholder]="'APP.USER.FORM.INPUT.PASSWORD_AGAIN' | translate">
+            <mat-error>
+              {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+            </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-error *ngIf="form.hasError('passwordMismatch')
+        && form.control.get('passwordAgain')?.touched
+        && form.control.get('password')?.touched">
+        {{ 'APP.USER.FORM.ERROR.PASSWORD_MISMATCH' | translate }}
+      </mat-error>
+      <div class="field-container">
+        <mat-form-field color="accent">
+          <input
+            matInput
+            required
+            name="phoneNumber"
+            ngModel
+            [placeholder]="'APP.USER.FORM.INPUT.PHONE_NUMBER' | translate">
+            <mat-error>
+              {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent">
+          <mat-label>{{ 'APP.USER.FORM.INPUT.GENDER.LABEL' | translate }}</mat-label>
+          <mat-select
+            required
+            emptyOption
+            name="gender"
+            ngModel>
+            <mat-option *ngFor="let gender of genders" [value]="gender">
+              {{ 'APP.USER.FORM.INPUT.GENDER.OPTIONS.' + gender | translate }}
+            </mat-option>
+          </mat-select>
+          <mat-error>
+            {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="field-container">
+        <mat-form-field color="accent">
+          <input
+            #birthDate="ngModel"
+            required
+            name="birthDate"
+            ngModel
+            [placeholder]="'APP.USER.FORM.INPUT.BIRTH_DATE' | translate"
+            [matDatepicker]="picker"
+            matInput>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="birthDate.hasError('matDatepickerParse') && birthDate.touched">
+            {{ 'APP.ERROR.FORM.INPUT.INCORRECT_DATE' | translate }}
+          </mat-error>
+          <mat-error *ngIf="birthDate.hasError('required')
+            && !birthDate.hasError('matDatepickerParse')
+            && birthDate.touched">
+            {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field color="accent">
+        <mat-label>{{ 'APP.USER.FORM.INPUT.SECURITY_GROUP.LABEL' | translate }}</mat-label>
+        <mat-select
+          required
+          name="securityGroup"
+          ngModel>
+          <mat-option *ngFor="let securityGroup of securityGroups" [value]="securityGroup">
+            {{ 'APP.USER.FORM.INPUT.SECURITY_GROUP.OPTIONS.' + securityGroup | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <app-autocomplete
+        color="accent"
+        name="organizationId"
+        [(ngModel)]="organizationId"
+        placeholder="Szervezet"
+        [fetchFn]="fetchOrganization.bind(this)"
+      ></app-autocomplete>
+      <button
+        [disabled]="form.invalid"
+        color="primary"
+        mat-raised-button>
+        {{ 'APP.USER.FORM.BUTTON.CREATE' | translate }}
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

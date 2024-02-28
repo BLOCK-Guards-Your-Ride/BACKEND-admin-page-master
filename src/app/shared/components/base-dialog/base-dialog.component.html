@@ -1,0 +1,32 @@
+<div mat-dialog-title class="dialog-title">
+  <h4 class="dialog-title__title">
+    {{ data.title | translate }}
+  </h4>
+  <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content>
+  <p>
+    {{ data.body | translate }}
+  </p>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    *ngFor="let action of data.actions"
+    mat-button
+    [color]="action.color"
+    [mat-dialog-close]="action.data">{{ action.label | translate }}</button>
+  <button
+    *ngIf="!data.actions?.length"
+    mat-button
+    color="accent"
+    [mat-dialog-close]="true">
+    {{ 'APP.SHARED.COMPONENTS.BASE_DIALOG.ACTIONS.OK' | translate }}</button>
+  <button
+    mat-button
+    color="warn"
+    mat-dialog-close>{{ 'APP.SHARED.COMPONENTS.BASE_DIALOG.ACTIONS.CANCEL' | translate }}</button>
+</div>

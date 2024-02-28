@@ -1,0 +1,10 @@
+.plc-metadata-card {
+  &-form {
+    display: flex;
+    flex-direction: column;
+
+    &__submit {
+      margin-top: 1.25rem;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@import './../../../../../app-colors';
+
+.tariff-form {
+  margin-bottom: 20px;
+}
+
+.field-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  mat-form-field {
+    width: 100%;
+    margin-right: 6px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+
+  .material-icons {
+    margin-top: 20px;
+    margin-left: 10px;
+
+    &:hover {
+      cursor: pointer;
+      color: $block-red;
+    }
+  }
+}
+
+.btn-wrapper {
+  text-align: right;
+
+  button {
+    width: 100%;
+    color: $block-grey;
+    background: $block-yellow;
+  }
+}
+
+.hs-form-required { display: none !important; }

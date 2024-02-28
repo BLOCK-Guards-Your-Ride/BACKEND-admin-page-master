@@ -1,0 +1,14 @@
+<ng-container *ngIf="lng && lat">
+  <agm-map
+    [ngStyle]="{ 'height.px': height}"
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="15"
+    (mapClick)="onMapClick($event)">
+    <agm-marker
+      *ngIf="markerLat && markerLng"
+      [latitude]="markerLat"
+      [longitude]="markerLng">
+    </agm-marker>
+  </agm-map>
+</ng-container>

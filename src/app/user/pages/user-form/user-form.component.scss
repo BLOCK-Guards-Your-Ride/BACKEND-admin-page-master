@@ -1,0 +1,34 @@
+@import './../../../../app-media-queries';
+
+.admin {
+  &-form {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      margin-bottom: .6rem;
+    }
+  }
+
+}
+
+.field-container {
+  @include lt-desktop {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  align-items: baseline;
+  display: flex;
+  justify-content: space-around;
+
+  .mat-form-field {
+    flex-grow: 1;
+
+    &:first-child {
+      @include gt-desktop {
+        margin-right: .6rem;
+      }
+    }
+  }
+}

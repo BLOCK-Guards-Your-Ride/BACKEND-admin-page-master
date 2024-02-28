@@ -1,0 +1,19 @@
+@import './../../../../app-mixins';
+@import './../../../../app-colors';
+
+.data-view {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+
+  &__item {
+    @include field-style;
+    border-bottom: 1px solid $block-grey;
+    padding: 10px 0;
+
+    &--last {
+      border: 0;
+    }
+  }
+}
+

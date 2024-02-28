@@ -1,0 +1,118 @@
+<app-list-filter>
+  <div class="client-information-list-filter">
+    <mat-form-field
+      class="client-information-list-filter__input"
+      color="accent">
+      <input
+        matInput
+        ngModel
+        type="number"
+        (ngModelChange)="filterUpdate({ field: 'PHONE_CLIENT_VERSION', value: $event })"
+        [placeholder]="'APP.CLIENT_INFORMATION_LIST.FILTER.PLACEHOLDER.PHONE_CLIENT_VERSION' | translate"
+      >
+    </mat-form-field>
+    <app-daterange-picker
+      (fromUpdate)="filterUpdate({ field: 'VALID_FROM_FROM', value: $event })"
+      (toUpdate)="filterUpdate({ field: 'VALID_FROM_TO', value: $event })"
+      placeholder="APP.CLIENT_INFORMATION_LIST.FILTER.PLACEHOLDER.VALID_FROM"
+      class="client-information-list-filter__input"
+    ></app-daterange-picker>
+    <app-daterange-picker
+      (fromUpdate)="filterUpdate({ field: 'VALID_TO_FROM', value: $event })"
+      (toUpdate)="filterUpdate({ field: 'VALID_TO_TO', value: $event })"
+      placeholder="APP.CLIENT_INFORMATION_LIST.FILTER.PLACEHOLDER.VALID_TO"
+      class="client-information-list-filter__input"
+    ></app-daterange-picker>
+  </div>
+</app-list-filter>
+<mat-card
+  class="client-information-list">
+  <mat-card-title>
+    {{ 'APP.CLIENT_INFORMATION_LIST.TABLE.TITLE' | translate }}
+  </mat-card-title>
+  <app-loading-spinner
+    [isLoading]="loading$ | async"
+  ></app-loading-spinner>
+  <mat-card-content
+    class="client-information-list__content">
+    <table
+      [matSortActive]="listState.orders?.length && listState.orders[0].field"
+      [matSortDirection]="listState.orders?.length && listState.orders[0].order | lowercase"
+      matSort
+      (matSortChange)="sortData($event)"
+      *ngIf="!(loading$ | async) && dataSource.getLength()"
+      class="client-information-list__table"
+      mat-table
+      [dataSource]="dataSource"
+      aria-describedby="Kliens információk szűrhető és rendezhető táblázata">
+      <ng-container matColumnDef="creation-date">
+        <th
+          id="creation-date"
+          mat-sort-header="CREATION_DATE"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.CLIENT_INFORMATION_LIST.TABLE.COLUMNS.CREATION_DATE' | translate }}</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [matTooltip]="element.fullName">{{ element.creationDate | date:'y.MM.dd.' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="phone-client-version">
+        <th
+          id="phone-client-version"
+          mat-sort-header="PHONE_CLIENT_VERSION"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.CLIENT_INFORMATION_LIST.TABLE.COLUMNS.PHONE_CLIENT_VERSION' | translate }}</th>
+        <td
+          mat-cell
+          *matCellDef="let element">{{ element.phoneClientVersion }}</td>
+      </ng-container>
+      <ng-container matColumnDef="valid-from">
+        <th
+          id="valid-from"
+          mat-sort-header="VALID_FROM"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.CLIENT_INFORMATION_LIST.TABLE.COLUMNS.VALID_FROM' | translate }}</th>
+        <td
+          mat-cell
+          *matCellDef="let element">{{ element.validFrom | date:'y.MM.dd.' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="valid-to">
+        <th
+          id="valid-to"
+          mat-sort-header="VALID_TO"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.CLIENT_INFORMATION_LIST.TABLE.COLUMNS.VALID_TO' | translate }}</th>
+        <td
+          mat-cell
+          *matCellDef="let element">{{ element.validTo | date:'y.MM.dd.' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <th
+          id="edit"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.CLIENT_INFORMATION_LIST.TABLE.COLUMNS.EDIT' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            (click)="editClientInformation(element.id)"
+            mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="!(loading$ | async) && !dataSource.getLength()" class="not-found-list-element">
+      <span>{{ 'APP.LIST.NO_LIST_ITEM_FOUND' | translate }}</span>
+    </div>
+    <mat-paginator
+      class="client-information-list__paginator"
+      color="accent"
+      [length]="dataSource.getLength()"
+      [pageSize]="listState.paginationParams.rows"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="pageEvent($event)"
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

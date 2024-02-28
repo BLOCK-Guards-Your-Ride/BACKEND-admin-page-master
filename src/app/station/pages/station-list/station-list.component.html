@@ -1,0 +1,164 @@
+<app-list-filter>
+  <div class="station-list-filter">
+    <div class="first-row">
+      <mat-form-field
+        class="station-list-filter__input"
+        color="accent"
+      >
+        <input
+          matInput
+          ngModel
+          (ngModelChange)="filterUpdate({ field: 'UNIQUE_IDENTIFIER', value: $event })"
+          [placeholder]="'APP.STATION_LIST.FILTER.PLACEHOLDER.STATION_QR_CODE' | translate"
+        >
+      </mat-form-field>
+      <mat-form-field
+        class="station-list-filter__input"
+        color="accent"
+      >
+        <input
+          matInput
+          ngModel
+          (ngModelChange)="filterUpdate({ field: 'NAME', value: $event })"
+          [placeholder]="'APP.STATION_LIST.FILTER.PLACEHOLDER.NAME' | translate"
+        >
+      </mat-form-field>
+    </div>
+  </div>
+</app-list-filter>
+<mat-card
+  class="station-list">
+  <mat-card-title>
+    {{ 'APP.STATION_LIST.TABLE.TITLE' | translate }}
+  </mat-card-title>
+  <app-loading-spinner
+    [isLoading]="loading$ | async"
+  ></app-loading-spinner>
+  <mat-card-content
+    class="station-list__content">
+    <table
+      [matSortActive]="listState.orders?.length && listState.orders[0].field"
+      [matSortDirection]="listState.orders?.length && listState.orders[0].order | lowercase"
+      matSort
+      (matSortChange)="sortData($event)"
+      *ngIf="!(loading$ | async) && dataSource.getLength()"
+      class="station-list__table"
+      mat-table
+      aria-describedby="List of stations"
+      [dataSource]="dataSource">
+      <ng-container matColumnDef="state">
+        <th
+          id="station-state"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.STATE' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon
+            *ngIf="element.state === 'ACTIVE'; else inactiveState">check_box</mat-icon>
+          <ng-template #inactiveState>
+            <mat-icon>check_box_outline_blank</mat-icon>
+          </ng-template>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="station-qr-code">
+        <th
+          id="station-qr-code"
+          mat-sort-header="STATION_QR_CODE"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.STATION_QR_CODE' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.stationQrCode }}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th
+          id="station-name"
+          mat-sort-header="NAME"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.NAME_OF_DOCK' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="docks">
+        <th
+          id="station-number-of-docks"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.DOCKS' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.totalDocks }}/{{ element.freeDocks }}</td>
+      </ng-container>
+      <ng-container matColumnDef="lat">
+        <th
+          id="station-latitude"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.LATITUDE' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.position.lat | number: '1.1-2' : 'hu' }}&deg;</td>
+      </ng-container>
+      <ng-container matColumnDef="lng">
+        <th
+          id="station-longitude"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.LONGITUDE' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.position.lng | number: '1.1-2' : 'hu' }}&deg;</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th
+          id="station-status"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.STATUS' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ 'APP.STATUS.' + element.status | uppercase | translate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <th
+          id="station-edit"
+          mat-header-cell
+          *matHeaderCellDef>{{ 'APP.STATION_LIST.TABLE.COLUMNS.EDIT' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-menu #stationMenu="matMenu">
+            <button
+              *ngFor="let contextMenuElement of contextMenuElements"
+              mat-menu-item
+              (click)="contextMenuElement.action(element.stationId)">
+              <mat-icon>{{ contextMenuElement.icon }}</mat-icon>
+              <span>
+                {{ contextMenuElement.text | translate }}
+              </span>
+            </button>
+            <button
+              *ngIf="element.state === 'ACTIVE'; else inactiveAction"
+              mat-menu-item
+              (click)="setStationState(element.stationId, 'INACTIVE')">
+              <mat-icon>check_box_outline_blank</mat-icon>
+              <span>
+                {{ 'APP.STATION_LIST.TABLE.COLUMNS.EDIT_MENU.INACTIVATE' | translate }}
+              </span>
+            </button>
+            <ng-template #inactiveAction>
+              <button
+                mat-menu-item
+                (click)="setStationState(element.stationId, 'ACTIVE')">
+                <mat-icon>check_box</mat-icon>
+                <span>
+                  {{ 'APP.STATION_LIST.TABLE.COLUMNS.EDIT_MENU.ACTIVATE' | translate }}
+                </span>
+              </button>
+            </ng-template>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="stationMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="!(loading$ | async) && !dataSource.getLength()" class="not-found-list-element">
+      <span>{{ 'APP.LIST.NO_LIST_ITEM_FOUND' | translate }}</span>
+    </div>
+    <mat-paginator
+      class="station-list__paginator"
+      color="accent"
+      #paginator
+      [length]="dataSource.getLength()"
+      [pageSize]="listState.paginationParams.rows"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="pageEvent($event)"
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,29 @@
+.daterange-picker {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    font-size: .8rem;
+  }
+
+  &-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    .separator {
+      margin: 0 .3rem;
+      text-align: center;
+      width: .6rem;
+    }
+
+    .picker {
+      flex: 1 1 calc(50% - .6rem);
+      max-width: calc(50% - .6rem);
+
+      .mat-form-field-infix {
+        width: unset;
+      }
+    }
+  }
+}

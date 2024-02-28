@@ -1,0 +1,25 @@
+<mat-toolbar class="upper-toolbar" color="accent">
+  <img
+    class="header-image"
+    src="assets/img/BLOCK_LOGO_HEADER.png"
+    alt="header logo"
+    (click)="gotoMainPage()">
+
+  <div class="userinfo">
+    <p>{{ username }}</p>
+    <p>
+      <countdown [config]="{ leftTime: tokenExpireDate }"></countdown>
+    </p>
+  </div>
+
+  <button
+    *ngIf="isLoggedIn"
+    class="logout-button"
+    mat-button
+    (click)="logout()"
+    color="primary">{{ 'APP.HEADER.BUTTON.LOGOUT' | translate }}
+  </button>
+</mat-toolbar>
+<mat-toolbar class="lower-toolbar" color="primary">
+  <app-menu></app-menu>
+</mat-toolbar>

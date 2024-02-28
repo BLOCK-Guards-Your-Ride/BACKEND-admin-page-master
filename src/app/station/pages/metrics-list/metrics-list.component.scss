@@ -1,0 +1,59 @@
+@import './../../../../app-mixins';
+@import './../../../../app-colors';
+
+.metrics-list {
+  @include list-style;
+
+  &__table {
+
+    .mat-column-enabled,
+    .mat-column-name,
+    .mat-column-slug,
+    .mat-column-org-type {
+      @include column-style(9rem);
+    }
+
+    .mat-column-edit {
+      @include column-style(6.25rem);
+      text-align: center;
+    }
+  }
+
+  &-filter {
+    display: flex;
+    flex-direction: column;
+
+    .first-row,
+    .second-row {
+      display: flex;
+      justify-content: space-between;
+
+      @media screen and (max-width: 49rem) {
+        flex-direction: column;
+      }
+
+    }
+
+    &__input {
+      flex-grow: 1;
+      margin-right: 1.25rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @media screen and (max-width: 49rem) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.metrics-list__table {
+  .mat-column-url {
+    .mat-icon {
+      color: $block-grey-faint;
+      margin-left: 15px;
+    }
+  }
+}

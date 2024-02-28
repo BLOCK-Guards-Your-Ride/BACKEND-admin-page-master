@@ -1,0 +1,39 @@
+@import './../../../../../app-mixins';
+
+.dialog {
+  &-title {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+      margin: 0;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: stretch;
+
+    &__close {
+      flex: 1 0 100%;
+    }
+  }
+
+  &-content {
+    > * {
+      margin-bottom: 1.25rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.name-box,
+.date-box,
+.description-box,
+.rating-box {
+  @include field-style;
+}

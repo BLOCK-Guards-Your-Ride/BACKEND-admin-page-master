@@ -1,0 +1,39 @@
+@import './../../../../app-media-queries';
+
+.client-information {
+
+  &-card-form {
+    &-actions {
+      @include lt-desktop {
+        flex-direction: column;
+      }
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &-actions__save-and-exit {
+      @include lt-desktop {
+        margin-bottom: .6rem;
+        margin-right: 0;
+      }
+
+      margin-right: 1.25rem;
+    }
+
+    &-actions > * {
+      flex: 1 0 calc(50% - .6rem);
+    }
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      margin-bottom: .6rem;
+    }
+  }
+
+}

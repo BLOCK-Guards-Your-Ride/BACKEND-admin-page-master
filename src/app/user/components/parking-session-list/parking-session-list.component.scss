@@ -1,0 +1,40 @@
+@import './../../../../app-mixins';
+@import './../../../../app-colors';
+
+.parking-session-list {
+  @include list-style;
+
+  &__table {
+    .mat-column-dock-nr,
+    .mat-column-parking-start-time,
+    .mat-column-parking-stop-time,
+    .mat-column-station-name,
+    .mat-column-price {
+      @include column-style(9rem);
+    }
+
+    .mat-column-stop {
+      @include column-style(3rem);
+      text-align: center;
+      white-space: normal;
+      word-break: normal;
+    }
+  }
+
+  &-filter {
+    display: flex;
+    justify-content: stretch;
+
+    &__input {
+      flex-grow: 1;
+    }
+  }
+}
+
+.green {
+  color: $block-green;
+}
+
+.red {
+  color: $block-red;
+}

@@ -1,0 +1,31 @@
+<mat-form-field
+  class="autocomplete-form-field"
+  [color]="color">
+  <input
+    type="text"
+    matInput
+    ngModel
+    #autocompInput="ngModel"
+    [matAutocomplete]="auto"
+    [placeholder]="placeholder | translate"
+    [value]="value"
+    (input)="debounceOnChange($event.target.value)"
+    (blur)="_onTouched()"
+    [disabled]="disabled"
+    [required]="required">
+  <mat-error *ngIf="autocompInput.hasError('required')">
+    {{ 'APP.ERROR.FORM.INPUT.REQUIRED' | translate }}
+  </mat-error>
+  <mat-hint>
+    {{ 'APP.SHARED.COMPONENTS.AUTOCOMPLETE.HINT' | translate }}
+  </mat-hint>
+  <mat-error *ngIf="autocompInput.hasError('autocompleteError')">
+    Autocomp
+  </mat-error>
+  <mat-autocomplete
+  (optionSelected)="onOptionSelected($event)"
+  #auto="matAutocomplete">
+  <mat-option *ngFor="let option of (options | async)" [value]="option"
+    >{{ option.label }}</mat-option>
+  </mat-autocomplete>
+</mat-form-field>
